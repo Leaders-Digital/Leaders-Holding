@@ -43,13 +43,13 @@ const Header = (props) => {
                                             <Link onClick={ClickHandler} href="/">Accueil</Link>
                                             
                                         </li>
-                                        <li><Link onClick={ClickHandler} href="/about">À propos</Link></li>
+                                        <li><Link onClick={ClickHandler} href="/#">À propos</Link></li>
 
-                                        <li><Link onClick={ClickHandler} href="/about">Nos Services</Link></li>
-                                        <li><Link onClick={ClickHandler} href="/about">Nos Entreprises</Link></li>
+                                        <li><Link onClick={ClickHandler} href="/#">Nos Services</Link></li>
+                                        <li><Link onClick={ClickHandler} href="/#">Nos Entreprises</Link></li>
                                         {/* <li><Link onClick={ClickHandler} href="/about">Actualités </Link></li> */}
-                                        <li><Link onClick={ClickHandler} href="/about">Carrières </Link></li>
-                                        <li><Link onClick={ClickHandler} href="/about">Contact </Link></li>
+                                        <li><Link onClick={ClickHandler} href="/#">Carrières </Link></li>
+                                        <li><Link onClick={ClickHandler} href="/#">Contact </Link></li>
 
 
                                         
