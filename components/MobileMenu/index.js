@@ -56,6 +56,7 @@ const MobileMenu = () => {
                                     </Fragment>
                                     : <Link className='active'
                                         href={item.link}>{item.title}</Link>
+
                                 }
                             </ListItem>
                         )

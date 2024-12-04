@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router' // Import useRouter from Next.js
 import abimg from '/public/images/about.jpg'
 import spimg1 from '/public/images/ab-shape-1.png'
 import spimg2 from '/public/images/ab-shape-2.png'
@@ -7,11 +8,16 @@ import spicon from '/public/images/icon/badge.svg'
 import sign from '/public/images/signeture.png'
 import Image from 'next/image'
 
-
 const About = (props) => {
+    const router = useRouter(); // Initialize the router
+
     const ClickHandler = () => {
         window.scrollTo(10, 0);
     }
+
+    // Check if the current route is '/about'
+    const isAboutPage = router.pathname === '/about';
+
     return (
         <section className={`wpo-about-section ${props.abClass}`}>
             <div className="container">
@@ -33,21 +39,33 @@ const About = (props) => {
                                 </div>
                             </div>
                             <div className="wpo-about-icon-content">
-    <h2>Des Solutions <span>Structurées et Centralisées</span></h2>
-    <p>
-        Leaders Holding est spécialisée dans la gestion des filiales, 
-        centralisant les décisions stratégiques, financières et fiscales pour 
-        optimiser la coordination et l'efficacité des ressources. 
-        Nous créons un écosystème robuste pour soutenir leur croissance et leur succès.
-    </p>
-    <div className="signeture">
-        <span><Image src={sign} alt="" /></span>
-        <p>Mohamed Mejri, Directeur Général</p>
-    </div>
-    <Link onClick={ClickHandler} href="/about" className="btn theme-btn">En savoir plus</Link>
-</div>
+                                <h2>Des Solutions <span>Structurées et Centralisées</span></h2>
+                                <p>
+                                    Leaders Holding est spécialisée dans la gestion des filiales,
+                                    centralisant les décisions stratégiques, financières et fiscales pour
+                                    optimiser la coordination et l'efficacité des ressources.
+                                    Nous créons un écosystème robuste pour soutenir leur croissance et leur succès.
+                                </p>
+                                {isAboutPage && (
+                                <p>
+                                    Chez Leaders Holding, nous croyons en une approche proactive de la gestion, en assurant une planification à long terme
+                                    et en apportant des solutions sur mesure pour répondre aux défis actuels et futurs. Ensemble, nous bâtissons un écosystème
+                                    solide et résilient pour soutenir le développement économique de nos filiales et de notre communauté.
+                                </p>
+                                )}
 
 
+                                {!isAboutPage && (
+                                    <>
+                                        <div className="signeture">
+                                            <span><Image src={sign} alt="" /></span>
+                                            <p>Mohamed Mejri, Directeur Général</p>
+                                        </div>
+                                        <Link onClick={ClickHandler} href="/about" className="btn theme-btn">En savoir plus</Link>
+                                    </>
+                                )}
+
+                            </div>
                         </div>
                     </div>
                 </div>

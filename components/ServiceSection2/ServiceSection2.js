@@ -59,8 +59,8 @@ const ServiceSection2 = (props) => {
                 <div className="row">
                     <div className="col-12">
                         <div className="wpo-section-title">
-                            <span>Our Services</span>
-                            <h2>Explore Our Services</h2>
+                            <span>Nos Services</span>
+                            <h2>Découvrez nos services</h2>
                         </div>
                     </div>
                 </div>
@@ -69,11 +69,11 @@ const ServiceSection2 = (props) => {
                         {Services.map((service, sitem) => (
                             <div className="col-lg-4 col-md-6 col-12" key={sitem}>
                                 <div className="wpo-service-item">
-                                    <div className="wpo-service-icon">
+                                    {/* <div className="wpo-service-icon">
                                         <div className="icon">
-                                            <i className={`fi ${service.fIcon}`}></i>
+                                        <Image src={service.sIcon} alt=""/>
                                         </div>
-                                    </div>
+                                    </div> */}
                                     <div className="wpo-service-text">
                                         <h2><Link onClick={ClickHandler} href='/service-single/[slug]' as={`/service-single/${service.slug}`}>{service.title}</Link></h2>
                                         <p>{service.des}</p>

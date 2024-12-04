@@ -4,6 +4,23 @@
 
 
 /*-- 2.1 topbar --*/
+.navigation-holder ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navigation-holder ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+}
+
+.navigation-holder ul li a:hover {
+    color: #007bff;
+}
 
 .topbar {
 	background: #bf9043;
