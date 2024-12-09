@@ -7,6 +7,7 @@ import spimg2 from '/public/images/ab-shape-2.png'
 import spicon from '/public/images/icon/badge.svg'
 import sign from '/public/images/signeture.png'
 import Image from 'next/image'
+import DoughnutChart from '../DoughnutChart'
 
 const About = (props) => {
     const router = useRouter(); // Initialize the router
@@ -41,17 +42,15 @@ const About = (props) => {
                             <div className="wpo-about-icon-content">
                                 <h2>Des Solutions <span>Structurées et Centralisées</span></h2>
                                 <p>
-                                    Leaders Holding est spécialisée dans la gestion des filiales,
-                                    centralisant les décisions stratégiques, financières et fiscales pour
-                                    optimiser la coordination et l'efficacité des ressources.
-                                    Nous créons un écosystème robuste pour soutenir leur croissance et leur succès.
+                                    Créé en 2019, Leaders Holding a développé un savoir-faire technique et commercial remarquable dans divers domaines, aussi bien à l'échelle locale qu'internationale.
+                                    Notre groupe ne cesse de croître et étend aujourd'hui ses activités à de multiples secteurs.
                                 </p>
                                 {isAboutPage && (
-                                <p>
-                                    Chez Leaders Holding, nous croyons en une approche proactive de la gestion, en assurant une planification à long terme
-                                    et en apportant des solutions sur mesure pour répondre aux défis actuels et futurs. Ensemble, nous bâtissons un écosystème
-                                    solide et résilient pour soutenir le développement économique de nos filiales et de notre communauté.
-                                </p>
+                                    <p>
+                                        Nous sommes actuellement présents en Afrique, au Moyen-Orient et en Europe, et nous comptons un total de 150 collaborateurs.
+                                        Notre proximité, expertise et transparence nous ont permis de gagner en notoriété ainsi que la confiance de nos clients et partenaires.
+                                        Toujours à l'affût des nouveautés, nous restons attentifs au marché et prêts à saisir les bonnes opportunités.
+                                    </p>
                                 )}
 
 
@@ -69,6 +68,12 @@ const About = (props) => {
                         </div>
                     </div>
                 </div>
+
+                {isAboutPage && (
+
+                <DoughnutChart />
+
+                )}
             </div>
         </section>
     )

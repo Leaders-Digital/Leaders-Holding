@@ -11,25 +11,34 @@ const Features = (props) => {
     const featres = [
         {
             fIcon: prdimg1,
-            title: 'Gestion et Structuration',
-            des: 'Leaders Holding supervise et coordonne les activités de ses filiales pour une efficacité optimale.',
+            title: 'La satisfaction client',
+            des: 'La satisfaction de nos clients fait partie de notre quotidien. Nous avons fait de la satisfaction de notre clientèle notre objectif majeur.',
         },
         {
             fIcon: prdimg2,
-            title: 'Planification Stratégique',
-            des: 'Offrir flexibilité et opportunités fiscales grâce à une centralisation des décisions clés.',
+            title: 'L’innovation',
+            des: 'L’innovation est notre force motrice pour la croissance et le succès. Elle nous permet de répondre aux attentes d’une clientèle exigeante et informée.',
         },
         {
             fIcon: prdimg3,
-            title: 'Coordination des Ressources',
-            des: 'Assurer une gestion harmonisée des ressources pour soutenir le développement des filiales.',
+            title: 'L’adaptabilité',
+            des: 'Chaque client est unique. Nos équipes se distinguent par leur capacité d’adaptation pour maximiser la satisfaction de notre clientèle.',
         },
     ];
+    
     
 
     return(
         <section className={`wpo-features-section section-padding  ${props.featuresClass}`}>
             <div className="container">
+            <div className="row">
+                    <div className="col-12">
+                        <div className="wpo-section-title">
+                            <span>Notre vision</span>
+                            <h2>L’avenir en perspective</h2>
+                        </div>
+                    </div>
+                </div>
                 <div className="row">
                     {featres.map((featres, fitem) => (
                         <div className="col-lg-4 col-md-6 col-12" key={fitem}>
