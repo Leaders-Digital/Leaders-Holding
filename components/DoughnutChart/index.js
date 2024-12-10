@@ -33,8 +33,8 @@ const DoughnutChart = () => {
                     'rgba(0, 255, 0, 0.8)'      // Leaders Travel
                 ],
                 borderWidth: 1,
-          
-                
+
+
             },
         ],
     };
@@ -44,7 +44,7 @@ const DoughnutChart = () => {
         plugins: {
             legend: {
                 position: 'right',
-                
+
             },
             tooltip: {
                 callbacks: {
@@ -58,22 +58,41 @@ const DoughnutChart = () => {
 
     return (
 
-       
-            <div className="container" style={{paddingTop:"90px"}}>
-                <div className="row">
-                    <div className="col-12">
-                        <div className="wpo-section-title">
-                            <span>Sociétés
+
+        <div className="container" >
+            <div className="row">
+                <div className="col-12">
+                    <div className="wpo-section-title">
+                        {/* <span>Sociétés
                             Leaders Holding</span>
-                            <h2>Par secteur</h2>
-                        </div>
+                        <h2>Par secteur</h2> */}
                     </div>
                 </div>
-       
-                <Doughnut data={data} options={options} />
-         
             </div>
-     
+
+            <div className="row" style={{display:"flex" , alignItems:"center"}}>
+                <div class="col-12 col-lg-6">
+
+                    <div className="wpo-about-text">
+                       
+                        <div className="wpo-about-icon-content">
+                            <h2>Répartition des Sociétés <span>Leaders Holding</span> par Secteur</h2>
+                            <p>
+                                Cette infographie présente la répartition des sociétés de Leaders Holding selon leur secteur d'activité. Le secteur dominant est le Pôle immobilier, représentant 47,2 % des activités. Les autres secteurs sont répartis de manière équitable à hauteur de 6,6 %, incluant les domaines suivants : Gracia Services, Leaders Import & Export, Leaders Digital, Leaders Makeup, Leaders Business, Leaders Fish, IBC, et Leaders Travel.
+                            </p>
+
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-12 col-lg-6"> <Doughnut data={data} options={options} /></div>
+            </div>
+
+
+
+        </div>
+
     )
 
 

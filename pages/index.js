@@ -24,14 +24,12 @@ const HomePage = () => {
             <Features />
             <About />
             <ServiceSection />
-            {/* <Pricing /> */}
-            {/* <FunFact fnClass={'wpo-fun-fact-section-s2'} /> */}
-            {/* <ProjectSection /> */}
+         
             <Testimonial />
             < div style={{ paddingBottom: '20px' }}>
                 <Support />
             </div>
-            {/* <BlogSection/> */}
+     
             <Footer />
             <Scrollbar />
         </Fragment>

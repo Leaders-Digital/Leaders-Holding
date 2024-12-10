@@ -9,6 +9,8 @@ import sign from '/public/images/signeture.png'
 import Image from 'next/image'
 import DoughnutChart from '../DoughnutChart'
 
+
+
 const About = (props) => {
     const router = useRouter(); // Initialize the router
 

@@ -20,7 +20,7 @@ const Header = (props) => {
                             {/* Logo Section */}
                             <div className="col-auto">
                                 <div className="navbar-header">
-                                    <Link onClick={ClickHandler} className="navbar-brand" href="/home">
+                                    <Link onClick={ClickHandler} className="navbar-brand" href="/">
                                         <Image src={Logo} alt="Logo" />
                                     </Link>
                                 </div>
@@ -43,10 +43,18 @@ const Header = (props) => {
                                             <Link onClick={ClickHandler} href="/#">Nos Entreprises</Link>
                                         </li>
                                         <li>
-                                            <Link onClick={ClickHandler} href="/#">Carrières</Link>
+                                            <Link onClick={ClickHandler} href="/carriere">Carrières</Link>
+                                        </li>
+                                        <li className="menu-item-has-children">
+                                            <Link onClick={ClickHandler} href="/">Carrières</Link>
+                                            <ul className="sub-menu">
+                                                <li><Link onClick={ClickHandler} href="/carriere">Nos Offres</Link></li>
+                                                <li><Link onClick={ClickHandler} href="/spontanee">Candidature spontannée</Link></li>
+                                               
+                                            </ul>
                                         </li>
                                         <li>
-                                            <Link onClick={ClickHandler} href="/#">Contact</Link>
+                                            <Link onClick={ClickHandler} href="/contact">Contact</Link>
                                         </li>
                                       
                                     </ul>
