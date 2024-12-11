@@ -22,19 +22,17 @@ const DoughnutChart = () => {
             {
                 data: [47.2, 6.6, 6.6, 6.6, 6.6, 6.6, 6.6, 6.5, 6.5],
                 backgroundColor: [
-                    'rgba(54, 162, 235, 0.8)', // Pôle immobilier
-                    'rgba(75, 192, 192, 0.8)', // Gracia Services
-                    'rgba(153, 102, 102, 0.8)', // Leaders import & export
-                    'rgba(102, 51, 153, 0.8)', // Leaders business
-                    'rgba(0, 0, 0, 0.8)',       // Leaders Fish
-                    'rgba(255, 99, 132, 0.8)',  // Leaders Makeup
-                    'rgba(54, 54, 235, 0.8)',   // Leaders digital
-                    'rgba(255, 159, 64, 0.8)',  // IBC
-                    'rgba(0, 255, 0, 0.8)'      // Leaders Travel
+                    'rgba(191, 144, 67, 0.8)',  // Original base color
+                    'rgba(202, 153, 83, 0.8)', // Slightly lighter gradient
+                    'rgba(213, 162, 99, 0.8)', // Further lighter
+                    'rgba(224, 172, 115, 0.8)', // Moving towards light gold
+                    'rgba(235, 181, 131, 0.8)', // Golden tone
+                    'rgba(246, 190, 147, 0.8)', // Softer light gradient
+                    'rgba(191, 122, 51, 0.8)',  // Darker gradient below base
+                    'rgba(166, 104, 43, 0.8)',  // Deep brown
+                    'rgba(141, 87, 36, 0.8)'    // Rich dark tone
                 ],
                 borderWidth: 1,
-
-
             },
         ],
     };
