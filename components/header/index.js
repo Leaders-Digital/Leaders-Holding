@@ -42,17 +42,10 @@ const Header = (props) => {
                                         <li>
                                             <Link onClick={ClickHandler} href="/#">Nos Entreprises</Link>
                                         </li>
-                                        {/* <li>
+                                        <li>
                                             <Link onClick={ClickHandler} href="/carriere">Carrières</Link>
-                                        </li> */}
-                                        <li className="menu-item-has-children">
-                                            <Link onClick={ClickHandler} href="/">Carrières</Link>
-                                            <ul className="sub-menu">
-                                                <li><Link onClick={ClickHandler} href="/carriere">Nos Offres</Link></li>
-                                                <li><Link onClick={ClickHandler} href="/spontanee">Candidature spontannée</Link></li>
-                                               
-                                            </ul>
                                         </li>
+                                       
                                         <li>
                                             <Link onClick={ClickHandler} href="/contact">Contact</Link>
                                         </li>

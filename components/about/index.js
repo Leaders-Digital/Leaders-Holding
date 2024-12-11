@@ -44,16 +44,16 @@ const About = (props) => {
                             <div className="wpo-about-icon-content">
                                 <h2>Des Solutions <span>Structurées et Centralisées</span></h2>
                                 <p>
-                                    Créé en 2019, Leaders Holding a développé un savoir-faire technique et commercial remarquable dans divers domaines, aussi bien à l'échelle locale qu'internationale.
-                                    Notre groupe ne cesse de croître et étend aujourd'hui ses activités à de multiples secteurs.
+                                    Leaders Holding, créé en 2019, regroupe plus de 15 sociétés multisectorielles opérant dans une diversité de secteurs économiques. Nos activités couvrent des domaines variés tels que l'immobilier, la cosmétique, la communication et le marketing digital, les services, le consulting, l'import & export, ainsi que le commerce.
+                                    Grâce à cette diversité, nous proposons une gamme complète de services et de produits adaptés à différents marchés, en garantissant à nos clients des prestations de qualité et une expertise pointue dans chaque secteur.
                                 </p>
                                 {isAboutPage && (
                                     <p>
-                                        Nous sommes actuellement présents en Afrique, au Moyen-Orient et en Europe, et nous comptons un total de 150 collaborateurs.
-                                        Notre proximité, expertise et transparence nous ont permis de gagner en notoriété ainsi que la confiance de nos clients et partenaires.
-                                        Toujours à l'affût des nouveautés, nous restons attentifs au marché et prêts à saisir les bonnes opportunités.
+                                        Depuis sa création, Leaders Holding s'est forgé une solide réputation en offrant des solutions innovantes et sur-mesure. Aujourd'hui, notre groupe est fier de son rayonnement international avec une présence active en Afrique, au Moyen-Orient et en Europe. Nous comptons plus de 150 collaborateurs passionnés et dévoués, qui partagent les valeurs fondamentales de proximité, de transparence et d'excellence.
+                                        <br />
                                     </p>
                                 )}
+
 
 
                                 {!isAboutPage && (
@@ -73,7 +73,7 @@ const About = (props) => {
 
                 {isAboutPage && (
 
-                <DoughnutChart />
+                    <DoughnutChart />
 
                 )}
             </div>

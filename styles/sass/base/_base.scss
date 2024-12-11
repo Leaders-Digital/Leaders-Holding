@@ -27,6 +27,71 @@ img {
     height: auto;
 }
 
+.horizontal-timeline {
+    .items {
+      border-top: 3px solid #e9ecef;
+      display: flex;
+      justify-content: space-between;
+      padding-top: 50px;
+      position: relative;
+  
+      .items-list {
+        text-align: center;
+        flex: 1;
+        position: relative;
+  
+        &:not(:last-child)::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          right: 0;
+          height: 36px;
+          border-right: 2px dashed #dee2e6;
+        }
+  
+        .event-date {
+          background-color: #BF9043;
+          color: white;
+          padding: 10px;
+          border-radius: 15px;
+          position: absolute;
+          top: -40px;
+          left: 50%;
+          transform: translateX(-50%);
+          font-size: 0.9rem;
+          width: max-content;
+        }
+  
+        p {
+          margin: 10px 0;
+          font-size: 0.9rem;
+          line-height: 1.4;
+          list-style: none;
+        }
+      }
+    }
+  
+    @media (max-width: 1140px) {
+        .items {
+          flex-direction: column;
+          border-top: none;
+        }
+      
+        .items-list {
+          margin-bottom: 40px;
+        }
+      
+        .event-date {
+          position: relative; /* Ensure proper positioning */
+          top: 0; /* Remove unnecessary top offset */
+          left: 50%; /* Center horizontally */
+          transform: translateX(-50%); /* Adjust centering */
+          text-align: center; /* Center the text */
+        }
+      }
+  }
+  
+
 p {
     font-size: 16px;
     color: $body-color;

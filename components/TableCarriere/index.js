@@ -18,8 +18,9 @@ const TableCarriere = () => {
     const [department, setDepartment] = useState('');
     const [location, setLocation] = useState('');
     const [selectedJob, setSelectedJob] = useState(null);
-    const [showJobModal, setShowJobModal] = useState(false);
-    const [showCandidatureModal, setShowCandidatureModal] = useState(false);
+
+
+
 
     const jobs = [
         { role: 'Business Systems Analyst', location: 'Boston', department: 'Consulting' },
@@ -30,6 +31,10 @@ const TableCarriere = () => {
         { role: 'Senior Software developer .NET', location: 'Tunis', department: 'Software Engineering' },
         { role: 'Junior Development Consultant M/F', location: 'Sintra - COE', department: 'Software Engineering' },
     ];
+
+    const ClickHandler = () => {
+        window.scrollTo(10, 0);
+    };
 
     const filteredJobs = jobs.filter((job) =>
         job.role.toLowerCase().includes(searchTerm.toLowerCase()) &&
@@ -63,13 +68,16 @@ const TableCarriere = () => {
                 </div>
 
                 <div className="col-md-4 ">
-                    <Button
+              
+
+                  <Link onClick={ClickHandler} href="/spontanee"> <Button
                         variant="contained"
                         style={{ backgroundColor: '#BF9043', color: '#fff' }}
-                        onClick={() => setShowCandidatureModal(true)}
+                        
                     >
                         Candidature Spontanée
-                    </Button>
+                    </Button></Link>
+
                 </div>
 
             </div>
@@ -180,89 +188,14 @@ const TableCarriere = () => {
                             <p>Rejoignez notre réserve de talents en soumettant simplement votre CV. Nous vous informerons des nouvelles opportunités correspondant à votre profil et vous tiendrons informé si vous êtes le candidat idéal pour l'un de nos postes ouverts.</p>
                         </div>
                         <div className="wpo-support-btn">
-                            <Link href="/contact">Soumettre votre CV</Link>
+                            <Link href="/spontanee">Soumettre votre CV</Link>
                         </div>
 
                     </div>
                 </div>
             </section>
 
-            {/* Modal for Candidature Spontanée */}
-            {showCandidatureModal && (
-                <div className="modal fade show d-block" tabIndex="-1" role="dialog">
-                    <div className="modal-dialog modal-dialog-centered" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title">Candidature Spontanée</h5>
-                                <button
-                                    type="button"
-                                    className="btn-close"
-                                    onClick={() => setShowCandidatureModal(false)}
-                                ></button>
-                            </div>
-                            <div className="modal-body">
-                                <form onSubmit={handleSubmit}>
-                                    <Grid container spacing={3}>
-                                        <Grid item xs={12}>
-                                            <TextField
-                                                fullWidth
-                                                label="Nom complet"
-                                                variant="outlined"
-                                                name="name"
-                                                value={formValues.name}
-                                                onChange={handleChange}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <TextField
-                                                fullWidth
-                                                label="E-mail"
-                                                variant="outlined"
-                                                name="email"
-                                                value={formValues.email}
-                                                onChange={handleChange}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <TextField
-                                                fullWidth
-                                                label="Numéro de téléphone"
-                                                variant="outlined"
-                                                name="phone"
-                                                value={formValues.phone}
-                                                onChange={handleChange}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <TextField
-                                                fullWidth
-                                                type="file"
-                                                label="Télécharger votre CV"
-                                                variant="outlined"
-                                                InputLabelProps={{
-                                                    shrink: true,
-                                                }}
-                                                name="cv"
-                                                onChange={handleChange}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <Button
-                                                fullWidth
-                                                variant="contained"
-                                                style={{ backgroundColor: '#BF9043', color: '#fff' }}
-                                                type="submit"
-                                            >
-                                                Soumettre
-                                            </Button>
-                                        </Grid>
-                                    </Grid>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
+       
         </div>
     );
 };

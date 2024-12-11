@@ -13,6 +13,8 @@ import BlogSection from '../components/BlogSection'
 import Footer from '../components/footer/Footer'
 import Scrollbar from '../components/scrollbar/scrollbar'
 import Hero3 from '../components/hero3';
+import TimelineSlider from '../components/TimelineSlider/TimelineSlider';
+import PartnerSlider from '../components/PartnerSlider';
 
 
 
@@ -23,10 +25,15 @@ const HomePage = () => {
             <Hero3 />
             <Features />
             <About />
+            <TimelineSlider />
             <ServiceSection />
-         
-            <Testimonial />
-            < div style={{ paddingBottom: '20px' }}>
+
+           
+            < div style={{ paddingBottom: '40px' }}>
+            <PartnerSlider />
+            </div>
+
+            < div style={{ paddingBottom: '40px' }}>
                 <Support />
             </div>
      

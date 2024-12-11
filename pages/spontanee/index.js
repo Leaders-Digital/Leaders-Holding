@@ -11,7 +11,7 @@ const Spontanee =() => {
     return(
         <Fragment>
             <Navbar/>
-            <PageTitle pageTitle={'Votre carrière chez Leaders Holding'} pagesub={'spontanee'}/> 
+            <PageTitle pageTitle={'Votre carrière chez Leaders Holding'} pagesub={'Candidature spontanée'}/> 
            <CondidatureSpontanee />
            
             <Footer/>

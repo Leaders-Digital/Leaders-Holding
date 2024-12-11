@@ -6,6 +6,7 @@ import ServiceSection2 from '../../components/ServiceSection2/ServiceSection2';
 import FunFact from '../../components/FunFact'
 import Footer from '../../components/footer/Footer'
 import Scrollbar from '../../components/scrollbar/scrollbar'
+import TimelineSlider from '../../components/TimelineSlider/TimelineSlider';
 
 
 const AboutPage =() => {
@@ -14,8 +15,11 @@ const AboutPage =() => {
             <Navbar/>
             <PageTitle pageTitle={'À propos de nous'} pagesub={'À propos'}/> 
             <About abClass={'wpo-about-section-s2'}/>
-            <ServiceSection2 srvClass={'wpo-service-section-s3'}/>
+
+            <TimelineSlider />
            
+            <ServiceSection2 srvClass={'wpo-service-section-s3'}/>
+   
             <FunFact fnClass={'section-padding'}/>
             <Footer/>
             <Scrollbar/>

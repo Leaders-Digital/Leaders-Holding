@@ -67,7 +67,7 @@ const Services = [
        fIcon: 'flaticon-insurance',
        title: 'Services Juridiques',
        slug: 'Services-Juridiques',
-       des: 'Support juridique pour assurer la conformité et sécuriser les activités des filiales.',
+       des: 'Accompagnement juridique stratégique pour garantir la conformité et sécuriser efficacement les activités des filiales.',
    },
 ];
 
