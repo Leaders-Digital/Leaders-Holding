@@ -15,7 +15,7 @@ const DoughnutChart = () => {
             'Leaders Fish',
             'Leaders Makeup',
             'Leaders digital',
-            'IBC',
+           
             'Leaders Travel'
         ],
         datasets: [
@@ -76,7 +76,7 @@ const DoughnutChart = () => {
                         <div className="wpo-about-icon-content">
                             <h2>Répartition des Sociétés <span>Leaders Holding</span> par Secteur</h2>
                             <p>
-                                Cette infographie présente la répartition des sociétés de Leaders Holding selon leur secteur d'activité. Le secteur dominant est le Pôle immobilier, représentant 47,2 % des activités. Les autres secteurs sont répartis de manière équitable à hauteur de 6,6 %, incluant les domaines suivants : Gracia Services, Leaders Import & Export, Leaders Digital, Leaders Makeup, Leaders Business, Leaders Fish, IBC, et Leaders Travel.
+                                Cette infographie présente la répartition des sociétés de Leaders Holding selon leur secteur d'activité. Le secteur dominant est le Pôle immobilier, représentant 47,2 % des activités. Les autres secteurs sont répartis de manière équitable à hauteur de 6,6 %, incluant les domaines suivants : Gracia Services, Leaders Import & Export, Leaders Digital, Leaders Makeup, Leaders Business, Leaders Fish, et Leaders Travel.
                             </p>
 
 

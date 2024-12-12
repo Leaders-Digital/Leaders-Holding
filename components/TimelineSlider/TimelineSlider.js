@@ -56,6 +56,14 @@ const TimelineSlider = () => {
                                         "Gracia Service",
                                     ],
                                 },
+                                {
+                                    year: "2024",
+                                    title: "CRÉATION DE SOCIÉTÉ",
+                                    items: [
+                                        "Leaders Travel",
+                                        
+                                    ],
+                                },
                             ].map(({ year, title, items }) => (
                                 <li className="list-inline-item items-list" key={year}>
                                     <div className="px-4">
