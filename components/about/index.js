@@ -60,7 +60,7 @@ const About = (props) => {
                                     <>
                                         <div className="signeture">
                                             <span><Image src={sign} alt="" /></span>
-                                            <p>Mohamed Mejri, Directeur Général</p>
+                                            <p>Ben Ismail Zied, Directeur Général</p>
                                         </div>
                                         <Link onClick={ClickHandler} href="/about" className="btn theme-btn">En savoir plus</Link>
                                     </>

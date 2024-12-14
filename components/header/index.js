@@ -40,7 +40,7 @@ const Header = (props) => {
                                             <Link onClick={ClickHandler} href="/service">Nos Services</Link>
                                         </li>
                                         <li>
-                                            <Link onClick={ClickHandler} href="/nosentreprise">Nos Entreprises</Link>
+                                            <Link onClick={ClickHandler} href="/nosentreprise">Nos filiales</Link>
                                         </li>
                                         <li>
                                             <Link onClick={ClickHandler} href="/carriere">Carrières</Link>
