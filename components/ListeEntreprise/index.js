@@ -23,7 +23,7 @@ const ListeEntreprise = () => {
                 telephone: "+216 27246345",
                 email: "leadersbuilding22@gmail.com",
                 address: "Tunis - Kélibia - Hammamet",
-                website:"https://leaders-building.com/"
+                website: "https://leaders-building.com/"
             }
         },
         {
@@ -34,7 +34,7 @@ const ListeEntreprise = () => {
                 telephone: "+216 26644400",
                 email: "Contact@leaders-makeup.com",
                 address: "Cité des Pins, Les berges du lac 2  1053 Tunis, Tunisie",
-                 website:"https://wakeup-cosmetics.tn/"
+                website: "https://wakeup-cosmetics.tn/"
             }
         },
         {
@@ -89,10 +89,10 @@ const ListeEntreprise = () => {
                 telephone: "",
                 email: "",
                 address: "",
-                
+
             }
         },
-        
+
         {
             name: "Leaders travel",
             logo: logotravel,

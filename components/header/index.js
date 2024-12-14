@@ -57,7 +57,7 @@ const Header = (props) => {
                             <div className="col-lg-2 col-md-2 col-2">
                                 <div className="header-right">
                                     <div className="close-form">
-                                        <Link onClick={ClickHandler} className="theme-btn" href="/contact">Contact</Link>
+                                        <Link onClick={ClickHandler} className="theme-btn" href="/contact">Espace Membre</Link>
                                     </div>
                                     
                                 </div>

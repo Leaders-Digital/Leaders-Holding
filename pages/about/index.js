@@ -7,6 +7,7 @@ import FunFact from '../../components/FunFact'
 import Footer from '../../components/footer/Footer'
 import Scrollbar from '../../components/scrollbar/scrollbar'
 import TimelineSlider from '../../components/TimelineSlider/TimelineSlider';
+import Responsable from '../../components/Responsable';
 
 
 const AboutPage =() => {
@@ -15,6 +16,9 @@ const AboutPage =() => {
             <Navbar/>
             <PageTitle pageTitle={'À propos de nous'} pagesub={'À propos'}/> 
             <About abClass={'wpo-about-section-s2'}/>
+
+            <Responsable />
+            
 
             <TimelineSlider />
            
