@@ -1,0 +1,79 @@
+name: Build and Deploy Frontend
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+    
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: bangov2
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+        
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: |
+            bangov2/leaders-holding:latest
+          build-args: |
+            VITE_APP_API_URL=https://serveur.leaders-business.com/api
+            VITE_APP_API_KEY=${{ secrets.VITE_APP_API_KEY }}
+            VITE_APP_IMAGES=https://serveur.leaders-business.com/uploads/
+        
+      - name: Deploy to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          script: |
+            # Create frontend directory if it doesn't exist
+            mkdir -p /home/ubuntu/leaders-holding
+            
+            # Create docker-compose.yml for frontend
+            cat > /home/ubuntu/leaders-holding/docker-compose.yml << 'EOF'
+            version: '3.8'
+            
+            services:
+              leaders-holding:
+                image: bangov2/leaders-holding:latest
+                container_name: leaders-holding-app
+                ports:
+                  - "3000:3000"
+                restart: unless-stopped
+                networks:
+                  - leaders-network
+            
+            networks:
+              leaders-network:
+                driver: bridge
+            EOF
+            
+            # Stop any existing frontend containers that might conflict
+            sudo docker stop leaders-holding-app 2>/dev/null || true
+            sudo docker rm leaders-holding-app 2>/dev/null || true
+            
+            # Navigate to frontend directory
+            cd /home/ubuntu/leaders-holding
+            
+            # Pull the latest frontend image
+            sudo docker compose pull
+            
+            # Start the frontend service
+            sudo docker compose up -d
+
