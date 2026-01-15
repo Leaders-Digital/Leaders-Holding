@@ -18,6 +18,7 @@ const TableCarriere = () => {
     const [department, setDepartment] = useState('');
     const [location, setLocation] = useState('');
     const [selectedJob, setSelectedJob] = useState(null);
+    const [showJobModal, setShowJobModal] = useState(false);
 
 
 
@@ -58,6 +59,11 @@ const TableCarriere = () => {
         e.preventDefault();
         console.log(formValues);
         // Add form submission logic here
+    };
+
+    const closeModal = () => {
+        setShowJobModal(false);
+        setSelectedJob(null);
     };
 
     return (
@@ -195,9 +201,123 @@ const TableCarriere = () => {
                 </div>
             </section>
 
+            {/* Job Details Modal */}
+            {showJobModal && selectedJob && (
+                <div className="modal" style={modalStyles} onClick={closeModal}>
+                    <div className="modal-content" style={modalContentStyles} onClick={(e) => e.stopPropagation()}>
+                        <span
+                            className="close"
+                            onClick={closeModal}
+                            style={closeButtonStyles}
+                        >
+                            &times;
+                        </span>
+                        <h2>{selectedJob.role}</h2>
+                        <div style={{ marginTop: '20px', textAlign: 'left' }}>
+                            <p><strong>Localisation:</strong> {selectedJob.location}</p>
+                            <p><strong>Département:</strong> {selectedJob.department}</p>
+                        </div>
+                        <div style={{ marginTop: '30px' }}>
+                            <form onSubmit={handleSubmit}>
+                                <TextField
+                                    fullWidth
+                                    label="Nom complet"
+                                    name="name"
+                                    value={formValues.name}
+                                    onChange={handleChange}
+                                    margin="normal"
+                                    required
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Email"
+                                    name="email"
+                                    type="email"
+                                    value={formValues.email}
+                                    onChange={handleChange}
+                                    margin="normal"
+                                    required
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Téléphone"
+                                    name="phone"
+                                    value={formValues.phone}
+                                    onChange={handleChange}
+                                    margin="normal"
+                                    required
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="CV (lien ou description)"
+                                    name="cv"
+                                    value={formValues.cv}
+                                    onChange={handleChange}
+                                    margin="normal"
+                                    multiline
+                                    rows={3}
+                                    required
+                                />
+                                <div style={{ marginTop: '20px', display: 'flex', gap: '10px' }}>
+                                    <Button
+                                        type="submit"
+                                        variant="contained"
+                                        style={{ backgroundColor: '#BF9043', color: '#fff', flex: 1 }}
+                                    >
+                                        Postuler
+                                    </Button>
+                                    <Button
+                                        variant="outlined"
+                                        onClick={closeModal}
+                                        style={{ flex: 1 }}
+                                    >
+                                        Annuler
+                                    </Button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            )}
        
         </div>
     );
+};
+
+const modalStyles = {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    backgroundColor: "rgba(0,0,0,0.5)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 1000
+};
+
+const modalContentStyles = {
+    backgroundColor: "#fff",
+    padding: "30px",
+    borderRadius: "8px",
+    maxWidth: "600px",
+    width: "90%",
+    maxHeight: "90vh",
+    overflowY: "auto",
+    position: "relative"
+};
+
+const closeButtonStyles = {
+    position: "absolute",
+    top: "10px",
+    right: "20px",
+    fontSize: "2rem",
+    cursor: "pointer",
+    color: "#666",
+    background: "none",
+    border: "none",
+    lineHeight: "1"
 };
 
 export default TableCarriere;
