@@ -30,7 +30,7 @@ const Hero3 = () => {
                             <div className="container">
                                 <div className="slide-content">
                                     <div className="slide-title">
-                                        <h2>Leaders Holding</h2>
+                                        <h1>Leaders Holding</h1>
                                     </div>
                                     <div className="slide-text">
                                         <p>

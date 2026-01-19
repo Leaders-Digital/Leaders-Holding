@@ -8,6 +8,8 @@ import Services from '../../api/service'
 import Footer from '../../components/footer/Footer.js'
 import Image from 'next/image';
 import Link from 'next/link'
+import SEO from '../../components/SEO';
+import { getSEOConfig, getBreadcrumbStructuredData } from '../../lib/seoConfig';
 
 import pn1 from '/public/images/project-single/prev.png'
 import pn2 from '/public/images/project-single/next.png'
@@ -17,6 +19,14 @@ const ServiceSinglePage = (props) => {
     const router = useRouter()
 
     const projectDetails = Projects.find(item => item.slug === router.query.slug)
+    
+    const seoConfig = getSEOConfig(router.pathname, router.query);
+    
+    const breadcrumbData = getBreadcrumbStructuredData([
+        { name: 'Accueil', url: '/' },
+        { name: 'Projets', url: '/project' },
+        { name: projectDetails?.title || 'Projet', url: `/project-single/${router.query.slug}` }
+    ]);
 
     const ClickHandler = () => {
         window.scrollTo(10, 0);
@@ -24,6 +34,15 @@ const ServiceSinglePage = (props) => {
 
     return (
         <Fragment>
+            <SEO 
+                title={seoConfig.title}
+                description={seoConfig.description}
+                canonical={seoConfig.canonical}
+                ogImage={seoConfig.ogImage}
+                ogType={seoConfig.ogType}
+                keywords={seoConfig.keywords}
+                structuredData={breadcrumbData}
+            />
             <Navbar hclass={'wpo-header-style-5'} />
             <PageTitle pageTitle={`${projectDetails?.title} Cleaning `} pagesub={'Project'} />
             <section className="wpo-project-single-section section-padding">

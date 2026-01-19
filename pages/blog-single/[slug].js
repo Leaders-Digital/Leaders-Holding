@@ -8,6 +8,8 @@ import Footer from '../../components/footer/Footer';
 import BlogSidebar from '../../components/BlogSidebar/BlogSidebar';
 import Scrollbar from '../../components/scrollbar/scrollbar';
 import Image from 'next/image'
+import SEO from '../../components/SEO';
+import { getSEOConfig, getBreadcrumbStructuredData } from '../../lib/seoConfig';
 import blog3 from '/public/images/blog-details/comments-author/img-1.jpg'
 import blog4 from '/public/images/blog-details/comments-author/img-2.jpg'
 import blog5 from '/public/images/blog-details/comments-author/img-3.jpg'
@@ -24,10 +26,29 @@ const BlogSingle = (props) => {
     const router = useRouter()
 
     const BlogDetails = blogs.find(item => item.slug === router.query.slug)
-
+    
+    const seoConfig = getSEOConfig(router.pathname, router.query);
+    
+    // Add breadcrumb structured data
+    const breadcrumbData = getBreadcrumbStructuredData([
+        { name: 'Accueil', url: '/' },
+        { name: 'Blog', url: '/blog' },
+        { name: BlogDetails?.title || 'Article', url: `/blog-single/${router.query.slug}` }
+    ]);
+    
+    const structuredData = [breadcrumbData, seoConfig.structuredData].filter(Boolean);
 
     return (
         <Fragment>
+            <SEO 
+                title={seoConfig.title}
+                description={seoConfig.description}
+                canonical={seoConfig.canonical}
+                ogImage={seoConfig.ogImage}
+                ogType={seoConfig.ogType}
+                keywords={seoConfig.keywords}
+                structuredData={structuredData.length > 0 ? structuredData : undefined}
+            />
             <Navbar />
             <PageTitle pageTitle={BlogDetails?.title} pagesub="blog" />
             <section className="wpo-blog-single-section section-padding">

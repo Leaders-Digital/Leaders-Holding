@@ -8,7 +8,7 @@ const PageTitle = (props) => {
                 <div className="row">
                     <div className="col-12">
                         <div className="wpo-breadcumb-wrap">
-                            <h2>{props.pageTitle}</h2>
+                            <h1>{props.pageTitle}</h1>
                             <ul>
                                 <li><Link href="/">Accueil</Link></li>
                                 <li><span>{props.pagesub}</span></li>

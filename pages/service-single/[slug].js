@@ -9,6 +9,8 @@ import Image from 'next/image';
 import ServiceSingleSidebar from './service-single-components/sidebar'
 import Solutions from './service-single-components/solution'
 import Benefits from './service-single-components/benefits'
+import SEO from '../../components/SEO';
+import { getSEOConfig, getBreadcrumbStructuredData } from '../../lib/seoConfig';
 import ssimg2 from '/public/images/service-single/2.jpg'
 import ssimg3 from '/public/images/service-single/3.jpg'
 
@@ -17,10 +19,27 @@ const ServiceSinglePage = (props) => {
     const router = useRouter()
 
     const serviceDetails = Services.find(item => item.slug === router.query.slug)
+    
+    const seoConfig = getSEOConfig(router.pathname, router.query);
+    
+    const breadcrumbData = getBreadcrumbStructuredData([
+        { name: 'Accueil', url: '/' },
+        { name: 'Services', url: '/service' },
+        { name: serviceDetails?.title || 'Service', url: `/service-single/${router.query.slug}` }
+    ]);
 
 
     return (
         <Fragment>
+            <SEO 
+                title={seoConfig.title}
+                description={seoConfig.description}
+                canonical={seoConfig.canonical}
+                ogImage={seoConfig.ogImage}
+                ogType={seoConfig.ogType}
+                keywords={seoConfig.keywords}
+                structuredData={[breadcrumbData, seoConfig.structuredData].filter(Boolean)}
+            />
             <Navbar hclass={'wpo-header-style-5'} />
             <PageTitle pageTitle={serviceDetails?.title} pagesub={'Service'} />
             <section className="wpo-service-single-section section-padding">
