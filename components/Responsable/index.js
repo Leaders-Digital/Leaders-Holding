@@ -44,9 +44,7 @@ const Responsable = (props) => {
                             <div className="wpo-about-icon-content">
                                 <h2> <span>Le Fondateur</span></h2>
                                 <p>
-                                    Monsieur Mohamed MEDDEB, l’un des pionniers de l’industrie en Tunisie, est issu d’une famille ayant opéré dans le secteur des boissons gazeuses.En 1978 et après des études en industries Agro-Alimentaires en France, M. Mohamed MEDDEB alors âgé de 24 ans, est rentré au pays pour lancer son premier projet de fabrication de yaourts et a révolutionné dès lors les habitudes culinaires en matière de consommation de lait et dérivés.
-                                    <br></br> <br></br>
-                                    En effet, son approche s’est basée sur la dynamisation du marché par le biais de l’introduction du marketing et en misant sur la qualité des produits. Son ambition pour la croissance de son Groupe a été couronnée par des alliances stratégiques d’envergure avec des grands leaders dans l’industrie du lait et dérivés et notamment DANONE et BONGRAIN. De nos jours, DELICE est devenue la marque la plus populaire et la plus proche des consommateurs.
+                                Mr Zied Ben Ismail est le fondateur et président du Groupe Leaders Holding. Entrepreneur visionnaire, il a lancé le groupe en 2019 avec l’ambition de bâtir une structure solide et innovante, orientée vers la performance, la croissance durable et l’excellence. Depuis sa création, Leaders Holding n’a cessé de se développer en consolidant son positionnement et en accompagnant ses partenaires à travers des solutions stratégiques adaptées aux exigences du marché.
                                 </p>
                             </div>
                         </div>

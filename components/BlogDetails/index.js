@@ -81,10 +81,8 @@ const BlogSingle = (props) => {
                                     <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.</p>
                                     <div className="socials">
                                         <ul className="social-link">
-                                            <li><Link href="/blog-single"><i className="ti-facebook"></i></Link></li>
-                                            <li><Link href="/blog-single"><i className="ti-twitter-alt"></i></Link></li>
-                                            <li><Link href="/blog-single"><i className="ti-linkedin"></i></Link></li>
-                                            <li><Link href="/blog-single"><i className="ti-instagram"></i></Link></li>
+                                            <li><Link href="https://www.facebook.com" target="_blank" rel="noopener noreferrer"><i className="ti-facebook"></i></Link></li>
+                                            <li><Link href="https://www.instagram.com" target="_blank" rel="noopener noreferrer"><i className="ti-instagram"></i></Link></li>
                                         </ul>
                                     </div>
                                 </div>

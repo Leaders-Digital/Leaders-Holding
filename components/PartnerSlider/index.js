@@ -9,14 +9,14 @@ import "swiper/css/autoplay"; // For Autoplay module
 import { Box, Typography } from "@mui/material";
 
 const logos = [
-  "https://leadersbuilding1.netlify.app/img/logo%20png/logo-inna.png",
-  "https://leadersbuilding1.netlify.app/img/logo%20png/logo-le-coin-immo.png",
-  "https://leadersbuilding1.netlify.app/img/logo%20png/logo-leaders-groupe-png.png",
-  "https://leadersbuilding1.netlify.app/img/logo%20png/logo-negoce.png",
-  "https://leadersbuilding1.netlify.app/img/logo%20png/logo-portail.png",
-  "https://leadersbuilding1.netlify.app/img/logo%20png/leaders-immo.png",
-  "https://leadersbuilding1.netlify.app/img/logo%20png/logo-digital.png",
-  "https://leadersbuilding1.netlify.app/img/logo%20png/Makeup-Logo.png"
+  "/images/logo/building.png",
+  "/images/logo/immo.png",
+  "/images/logo/business.png",
+  "/images/logo/digital.png",
+  "/images/logo/makeup.png",
+  "/images/logo/fish.png",
+  "/images/logo/import.png",
+  "/images/logo/travel.png"
 ];
 
 const PartnerSlider = () => {
@@ -64,7 +64,7 @@ const PartnerSlider = () => {
                   src={logo}
                   alt={`Partner ${index + 1}`}
                   style={{
-                    height: "64px",
+                    height: "100px",
                     objectFit: "contain",
                   }}
                 />

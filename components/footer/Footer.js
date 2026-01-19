@@ -27,23 +27,13 @@ const Footer = (props) => {
                                 <p>Leaders Holding est spécialisée dans la gestion des filiales, centralisant les décisions stratégiques, financières et fiscales pour optimiser la coordination et l'efficacité des ressources.</p>
                                 <ul>
                                     <li>
-                                        <Link onClick={ClickHandler} href="/">
+                                        <Link href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
                                             <i className="ti-facebook"></i>
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link onClick={ClickHandler} href="/">
-                                            <i className="ti-twitter-alt"></i>
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link onClick={ClickHandler} href="/">
+                                        <Link href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
                                             <i className="ti-instagram"></i>
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link onClick={ClickHandler} href="/">
-                                            <i className="ti-google"></i>
                                         </Link>
                                     </li>
                                 </ul>
@@ -57,7 +47,7 @@ const Footer = (props) => {
                                 <div className="contact-ft">
                                     <ul>
                                         <li><i className="fi flaticon-location"></i>Cité des Pins, Les berges du lac 2 1053 Tunis, Tunisie</li>
-                                        <li><i className="fi flaticon-phone-call"></i>+216 20 200 200</li>
+                                        <li><i className="fi flaticon-phone-call"></i>+216 27360038</li>
                                         <li><i className="fi flaticon-send"></i>contact@leadersholding.tn</li>
                                     </ul>
                                 </div>
