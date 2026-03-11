@@ -51,7 +51,7 @@ const staticPages = [
   { url: '/project', changefreq: 'monthly', priority: '0.8' },
   { url: '/blog', changefreq: 'weekly', priority: '0.8' },
   { url: '/contact', changefreq: 'monthly', priority: '0.7' },
-  { url: '/carriere', changefreq: 'weekly', priority: '0.7' },
+  { url: '/conditature', changefreq: 'weekly', priority: '0.7' },
   { url: '/nosentreprise', changefreq: 'monthly', priority: '0.7' },
   { url: '/spontanee', changefreq: 'monthly', priority: '0.6' },
 ];

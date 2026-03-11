@@ -14,13 +14,9 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Set build-time environment variables
-ARG VITE_APP_API_URL
-ARG VITE_APP_API_KEY
-ARG VITE_APP_IMAGES
-
-ENV VITE_APP_API_URL=$VITE_APP_API_URL
-ENV VITE_APP_API_KEY=$VITE_APP_API_KEY
-ENV VITE_APP_IMAGES=$VITE_APP_IMAGES
+# NEXT_PUBLIC_* vars must be provided at build time so Next.js can inline them
+ARG NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 
 # Disable telemetry during build
 ENV NEXT_TELEMETRY_DISABLED 1

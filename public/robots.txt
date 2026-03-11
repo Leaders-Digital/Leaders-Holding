@@ -16,7 +16,7 @@ Allow: /service
 Allow: /project
 Allow: /blog
 Allow: /contact
-Allow: /carriere
+Allow: /conditature
 Allow: /nosentreprise
 
 # Sitemap location

@@ -1,323 +1,363 @@
-import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useState, useEffect, useCallback } from 'react';
+import Link from 'next/link';
 import {
-    Grid,
-    TextField,
-    FormControlLabel,
-    Checkbox,
-    Button,
-    Link,
-    Select,
-    MenuItem,
-    FormControl,
-    InputLabel,
-} from '@mui/material';
+    API, BRAND, JOB_TYPES, GOVERNORATES,
+    formatDate, workModeLabel, Badge, Spinner,
+} from './jobUtils';
 
 const TableCarriere = () => {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [department, setDepartment] = useState('');
-    const [location, setLocation] = useState('');
-    const [selectedJob, setSelectedJob] = useState(null);
-    const [showJobModal, setShowJobModal] = useState(false);
+    const [search,      setSearch]      = useState('');
+    const [jobType,     setJobType]     = useState('');
+    const [governorate, setGovernorate] = useState('');
+    const [jobs,        setJobs]        = useState([]);
+    const [loading,     setLoading]     = useState(true);
+    const [loadError,   setLoadError]   = useState('');
+    const [total,       setTotal]       = useState(0);
+    const [page,        setPage]        = useState(1);
+    const [totalPages,  setTotalPages]  = useState(1);
+    const LIMIT = 10;
 
+    // ── Fetch list ─────────────────────────────────────────────────────────────
+    const fetchJobs = useCallback(async () => {
+        setLoading(true);
+        setLoadError('');
+        try {
+            const params = new URLSearchParams({
+                status: 'published',
+                includeExpired: 'false',
+                page,
+                limit: LIMIT,
+            });
+            if (search)      params.set('search',      search);
+            if (jobType)     params.set('jobType',     jobType);
+            if (governorate) params.set('governorate', governorate);
 
+            const res  = await fetch(`${API}/job-offers?${params}`);
+            const data = await res.json();
+            if (!data.success) throw new Error(data.message || 'Erreur serveur');
+            setJobs(data.data || []);
+            setTotal(data.total || 0);
+            setTotalPages(data.totalPages || 1);
+        } catch (err) {
+            setLoadError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    }, [search, jobType, governorate, page]);
 
+    useEffect(() => { fetchJobs(); }, [fetchJobs]);
+    useEffect(() => { setPage(1);  }, [search, jobType, governorate]);
 
-    const jobs = [
-        { role: 'Business Systems Analyst', location: 'Boston', department: 'Consulting' },
-        { role: 'Senior Sales Executive', location: 'London', department: 'Sales & Client Management' },
-        { role: 'Client Success Manager', location: 'Boston', department: 'Client Services' },
-        { role: 'Senior Analyst - Operations - US Shift', location: 'Mumbai', department: 'Client Services' },
-        { role: 'Team Lead Private Credit', location: 'Mumbai', department: 'Client Services' },
-        { role: 'Senior Software developer .NET', location: 'Tunis', department: 'Software Engineering' },
-        { role: 'Junior Development Consultant M/F', location: 'Sintra - COE', department: 'Software Engineering' },
-    ];
-
-    const ClickHandler = () => {
-        window.scrollTo(10, 0);
-    };
-
-    const filteredJobs = jobs.filter((job) =>
-        job.role.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        (department === '' || job.department === department) &&
-        (location === '' || job.location === location)
-    );
-
-    const [formValues, setFormValues] = useState({
-        name: '',
-        email: '',
-        phone: '',
-        cv: '',
-    });
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormValues({ ...formValues, [name]: value });
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(formValues);
-        // Add form submission logic here
-    };
-
-    const closeModal = () => {
-        setShowJobModal(false);
-        setSelectedJob(null);
+    // ── Shared input style ─────────────────────────────────────────────────────
+    const inputStyle = {
+        width: '100%', padding: '11px 14px', borderRadius: 8,
+        border: '1.5px solid #ddd', fontSize: 14, background: '#fff',
+        cursor: 'pointer', outline: 'none', boxSizing: 'border-box',
     };
 
     return (
-        <div className="container my-4">
-            <div className="row mb-3">
-                <div className="col-md-8 ">
-                    <h1>21 Postes ouverts</h1>
+        <div style={{ fontFamily: 'inherit' }}>
+
+            {/* ── Filters bar ──────────────────────────────────────────────── */}
+            <div style={{ background: '#f9f7f4', padding: '28px 0', borderBottom: '1px solid #ece8e0' }}>
+                <div className="container">
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 14 }}>
+
+                        {/* Search */}
+                        <div style={{ position: 'relative' }}>
+                            <i className="ti-search" style={{
+                                position: 'absolute', left: 14, top: '50%',
+                                transform: 'translateY(-50%)', color: '#aaa',
+                                fontSize: 13, pointerEvents: 'none',
+                            }} />
+                            <input
+                                type="text"
+                                placeholder="Rechercher un poste..."
+                                value={search}
+                                onChange={e => setSearch(e.target.value)}
+                                style={{ ...inputStyle, paddingLeft: 38 }}
+                            />
+                        </div>
+
+                        {/* Job type */}
+                        <select value={jobType} onChange={e => setJobType(e.target.value)} style={inputStyle}>
+                            <option value="">Type de contrat</option>
+                            {JOB_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
+                        </select>
+
+                        {/* Governorate */}
+                        <select value={governorate} onChange={e => setGovernorate(e.target.value)} style={inputStyle}>
+                            <option value="">Gouvernorat</option>
+                            {GOVERNORATES.map(g => <option key={g} value={g}>{g}</option>)}
+                        </select>
+
+                        {/* Reset */}
+                        {(search || jobType || governorate) && (
+                            <button
+                                onClick={() => { setSearch(''); setJobType(''); setGovernorate(''); }}
+                                style={{
+                                    padding: '11px 18px', borderRadius: 8,
+                                    border: `1.5px solid ${BRAND}`,
+                                    background: '#fff', color: BRAND,
+                                    fontSize: 14, fontWeight: 600, cursor: 'pointer',
+                                }}
+                            >
+                                <i className="ti-close" style={{ marginRight: 6, fontSize: 11 }} />
+                                Réinitialiser
+                            </button>
+                        )}
+                    </div>
                 </div>
-
-                <div className="col-md-4 ">
-              
-
-                  <Link onClick={ClickHandler} href="/spontanee"> <Button
-                        variant="contained"
-                        style={{ backgroundColor: '#BF9043', color: '#fff' }}
-                        
-                    >
-                        Candidature Spontanée
-                    </Button></Link>
-
-                </div>
-
             </div>
 
+            {/* ── Content ──────────────────────────────────────────────────── */}
+            <div className="container" style={{ paddingTop: 36, paddingBottom: 20 }}>
 
+                {/* Header row */}
+                <div style={{
+                    display: 'flex', justifyContent: 'space-between',
+                    alignItems: 'center', marginBottom: 28, flexWrap: 'wrap', gap: 12,
+                }}>
+                    <div>
+                        <h2 style={{ margin: 0, fontSize: 22, fontWeight: 700 }}>
+                            {loading ? 'Chargement…' : `${total} offre${total !== 1 ? 's' : ''} disponible${total !== 1 ? 's' : ''}`}
+                        </h2>
+                        {(search || jobType || governorate) && !loading && (
+                            <p style={{ margin: '4px 0 0', fontSize: 13, color: '#888' }}>
+                                Résultats filtrés
+                            </p>
+                        )}
+                    </div>
+                    <Link href="/spontanee">
+                        <span style={{
+                            display: 'inline-block', padding: '11px 22px',
+                            background: BRAND, color: '#fff', borderRadius: 8,
+                            fontWeight: 700, fontSize: 14, cursor: 'pointer',
+                        }}>
+                            Candidature Spontanée
+                            <i className="ti-arrow-right" style={{ marginLeft: 8, fontSize: 12 }} />
+                        </span>
+                    </Link>
+                </div>
 
-            <div className="row mb-3">
-                <div className="col-md-4 mb-2">
-                    <FormControl fullWidth variant="outlined">
-                        <InputLabel htmlFor="department-select">Département</InputLabel>
-                        <Select
-                            value={department}
-                            onChange={(e) => setDepartment(e.target.value)}
-                            label="Département"
-                            inputProps={{
-                                id: 'department-select',
+                {/* Error */}
+                {loadError && (
+                    <div style={{
+                        background: '#fee2e2', border: '1px solid #fca5a5', borderRadius: 8,
+                        padding: '16px 20px', color: '#b91c1c', marginBottom: 24, fontSize: 14,
+                    }}>
+                        <i className="ti-alert" style={{ marginRight: 8 }} />
+                        {loadError}
+                        <button onClick={fetchJobs} style={{
+                            marginLeft: 14, color: BRAND, background: 'none',
+                            border: 'none', cursor: 'pointer', fontWeight: 600,
+                        }}>
+                            Réessayer
+                        </button>
+                    </div>
+                )}
+
+                {/* Spinner */}
+                {loading && <Spinner />}
+
+                {/* Empty state */}
+                {!loading && !loadError && jobs.length === 0 && (
+                    <div style={{ textAlign: 'center', padding: '60px 0', color: '#888' }}>
+                        <i className="ti-search" style={{ fontSize: 52, color: '#ccc', display: 'block', marginBottom: 16 }} />
+                        <h3 style={{ color: '#555', marginBottom: 8 }}>Aucune offre trouvée</h3>
+                        <p style={{ fontSize: 14 }}>Essayez d'autres critères ou consultez nos candidatures spontanées.</p>
+                    </div>
+                )}
+
+                {/* ── Offer list ───────────────────────────────────────────── */}
+                {!loading && jobs.length > 0 && (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 36 }}>
+                        {jobs.map((job, idx) => (
+                            <div
+                                key={job._id}
+                                style={{
+                                    background: '#fff', borderRadius: 14, overflow: 'hidden',
+                                    border: '1.5px solid #ece8e0',
+                                    boxShadow: '0 2px 10px rgba(0,0,0,0.05)',
+                                    transition: 'box-shadow 0.22s, border-color 0.22s, transform 0.18s',
+                                    width: '100%',
+                                }}
+                                onMouseOver={e => {
+                                    e.currentTarget.style.boxShadow    = '0 8px 32px rgba(191,144,67,0.14)';
+                                    e.currentTarget.style.borderColor  = BRAND;
+                                    e.currentTarget.style.transform    = 'translateY(-2px)';
+                                }}
+                                onMouseOut={e => {
+                                    e.currentTarget.style.boxShadow   = '0 2px 10px rgba(0,0,0,0.05)';
+                                    e.currentTarget.style.borderColor = '#ece8e0';
+                                    e.currentTarget.style.transform   = 'translateY(0)';
+                                }}
+                            >
+                                <div style={{ display: 'flex', alignItems: 'stretch' }}>
+
+                                    {/* Left accent bar */}
+                                    <div style={{
+                                        width: 5, flexShrink: 0,
+                                        background: `linear-gradient(180deg, ${BRAND}, #8a6520)`,
+                                    }} />
+
+                                    {/* Card body */}
+                                    <div style={{
+                                        flex: 1, padding: '22px 26px',
+                                        display: 'flex', alignItems: 'center',
+                                        gap: 22, flexWrap: 'wrap',
+                                    }}>
+                                        {/* Index */}
+                                        <div style={{
+                                            width: 44, height: 44, borderRadius: '50%', flexShrink: 0,
+                                            background: BRAND + '14', border: `2px solid ${BRAND}33`,
+                                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                            fontSize: 14, fontWeight: 800, color: BRAND,
+                                        }}>
+                                            {String(idx + 1).padStart(2, '0')}
+                                        </div>
+
+                                        {/* Main info */}
+                                        <div style={{ flex: 1, minWidth: 220 }}>
+                                            {job.societe?.nom && (
+                                                <p style={{
+                                                    margin: '0 0 4px', fontSize: 11, fontWeight: 700,
+                                                    color: BRAND, textTransform: 'uppercase', letterSpacing: 1,
+                                                }}>
+                                                    {job.societe.nom}
+                                                </p>
+                                            )}
+                                            <h3 style={{
+                                                margin: '0 0 10px', fontSize: 17, fontWeight: 700,
+                                                color: '#111', lineHeight: 1.35,
+                                            }}>
+                                                {job.title}
+                                            </h3>
+                                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, alignItems: 'center' }}>
+                                                {job.jobType    && <Badge text={job.jobType} />}
+                                                {job.workMode   && <Badge text={workModeLabel(job.workMode)} color="#2563eb" />}
+                                                {job.experience && <Badge text={job.experience} color="#7c3aed" />}
+                                                {job.categories?.slice(0, 2).map(c => <Badge key={c} text={c} color="#374151" />)}
+                                            </div>
+                                        </div>
+
+                                        {/* Meta column */}
+                                        <div style={{
+                                            display: 'flex', flexDirection: 'column', gap: 7,
+                                            minWidth: 180, flexShrink: 0,
+                                        }}>
+                                            {job.location?.governorate && (
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: 7, fontSize: 13, color: '#555' }}>
+                                                    <i className="fi flaticon-placeholder" style={{ fontSize: 14, color: BRAND, flexShrink: 0 }} />
+                                                    <span>{[job.location.city, job.location.governorate].filter(Boolean).join(', ')}</span>
+                                                </div>
+                                            )}
+                                            {job.salary && (
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: 7, fontSize: 13, color: '#555' }}>
+                                                    <i className="ti-money" style={{ fontSize: 14, color: BRAND, flexShrink: 0 }} />
+                                                    <span>{job.salary}</span>
+                                                </div>
+                                            )}
+                                            {job.vacancies > 0 && (
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: 7, fontSize: 13, color: '#555' }}>
+                                                    <i className="ti-id-badge" style={{ fontSize: 14, color: BRAND, flexShrink: 0 }} />
+                                                    <span>{job.vacancies} poste{job.vacancies > 1 ? 's' : ''}</span>
+                                                </div>
+                                            )}
+                                            {job.expirationDate && (
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: 7, fontSize: 12, color: '#aaa' }}>
+                                                    <i className="ti-calendar" style={{ fontSize: 13, flexShrink: 0 }} />
+                                                    <span>Expire le {formatDate(job.expirationDate)}</span>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* CTA → navigates to detail page */}
+                                        <Link href={`/conditature/${job._id}`}>
+                                            <span style={{
+                                                display: 'inline-block',
+                                                padding: '12px 28px', background: BRAND,
+                                                color: '#fff', border: 'none', borderRadius: 10,
+                                                fontWeight: 700, fontSize: 14, cursor: 'pointer',
+                                                whiteSpace: 'nowrap', flexShrink: 0,
+                                                boxShadow: `0 4px 14px ${BRAND}44`,
+                                                transition: 'background 0.2s',
+                                            }}>
+                                                Voir l'offre
+                                                <i className="ti-arrow-right" style={{ marginLeft: 8, fontSize: 12 }} />
+                                            </span>
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+                {/* Pagination */}
+                {!loading && totalPages > 1 && (
+                    <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginBottom: 40, flexWrap: 'wrap' }}>
+                        <button
+                            disabled={page <= 1}
+                            onClick={() => setPage(p => p - 1)}
+                            style={{
+                                padding: '8px 18px', borderRadius: 7,
+                                border: `1.5px solid ${page <= 1 ? '#eee' : BRAND}`,
+                                background: '#fff', color: page <= 1 ? '#ccc' : BRAND,
+                                cursor: page <= 1 ? 'not-allowed' : 'pointer', fontWeight: 600,
                             }}
                         >
-                            <MenuItem value="">Tous les départements</MenuItem>
-                            <MenuItem value="Pôle immobilier">Pôle immobilier</MenuItem>
-                            <MenuItem value="Gracia Services">Gracia Services</MenuItem>
-                            <MenuItem value="Leaders import & export">Leaders import & export</MenuItem>
-                            <MenuItem value="Leaders business">Leaders business</MenuItem>
-                            <MenuItem value="Leaders Fish">Leaders Fish</MenuItem>
-                            <MenuItem value="Leaders Makeup">Leaders Makeup</MenuItem>
-                            <MenuItem value="IBC">IBC</MenuItem>
-                            <MenuItem value="Leaders Travel">Leaders Travel</MenuItem>
-                            <MenuItem value="Leaders Digital">Leaders Digital</MenuItem>
-
-                        </Select>
-                    </FormControl>
-                </div>
-
-
-                <div className="col-md-4 mb-2">
-                    <FormControl fullWidth variant="outlined">
-                        <InputLabel htmlFor="location-select">Localisation</InputLabel>
-                        <Select
-                            value={location}
-                            onChange={(e) => setLocation(e.target.value)}
-                            label="Localisation"
-                            inputProps={{
-                                id: 'location-select',
+                            <i className="ti-arrow-left" style={{ marginRight: 6, fontSize: 11 }} />
+                            Précédent
+                        </button>
+                        {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
+                            <button
+                                key={p}
+                                onClick={() => setPage(p)}
+                                style={{
+                                    padding: '8px 14px', borderRadius: 7, fontWeight: 600,
+                                    border: `1.5px solid ${p === page ? BRAND : '#eee'}`,
+                                    background: p === page ? BRAND : '#fff',
+                                    color: p === page ? '#fff' : '#555',
+                                    cursor: 'pointer',
+                                }}
+                            >
+                                {p}
+                            </button>
+                        ))}
+                        <button
+                            disabled={page >= totalPages}
+                            onClick={() => setPage(p => p + 1)}
+                            style={{
+                                padding: '8px 18px', borderRadius: 7,
+                                border: `1.5px solid ${page >= totalPages ? '#eee' : BRAND}`,
+                                background: '#fff', color: page >= totalPages ? '#ccc' : BRAND,
+                                cursor: page >= totalPages ? 'not-allowed' : 'pointer', fontWeight: 600,
                             }}
                         >
-                            <MenuItem value="">Toutes les localisations</MenuItem>
-                            <MenuItem value="Tunis">Tunis</MenuItem>
-                            <MenuItem value="Nabeul">Nabeul</MenuItem>
-                        </Select>
-                    </FormControl>
-                </div>
-
-                <div className="col-md-4">
-                    <TextField
-                        fullWidth
-                        label="Rechercher un rôle"
-                        variant="outlined"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                </div>
+                            Suivant
+                            <i className="ti-arrow-right" style={{ marginLeft: 6, fontSize: 11 }} />
+                        </button>
+                    </div>
+                )}
             </div>
 
-            <div className="d-flex justify-content-between align-items-center mb-3">
-                <h3>Liste des Offres</h3>
-
-            </div>
-
-            <table className="table table-bordered table-hover">
-                <thead style={{ backgroundColor: '#BF9043', color: 'white' }}>
-                    <tr>
-                        <th>Rôle</th>
-                        <th>Localisation</th>
-                        <th>Département</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {filteredJobs.map((job, index) => (
-                        <tr key={index}>
-                        <td>{job.role}</td>
-                        <td>{job.location}</td>
-                        <td>{job.department}</td>
-                        <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                          <Button
-                            variant="contained"
-                            size="small"
-                            style={{ backgroundColor: '#BF9043', color: '#fff' }}
-                            onClick={() => {
-                              setSelectedJob(job);
-                              setShowJobModal(true);
-                            }}
-                          >
-                            Voir l'offre
-                          </Button>
-                        </td>
-                      </tr>
-                      
-                    ))}
-                </tbody>
-            </table>
-
+            {/* ── Talent pool banner ───────────────────────────────────────── */}
             <section className="wpo-support-section">
                 <div className="container">
                     <div className="wpo-support-wrapper">
                         <div className="wpo-support-text">
                             <h2>Rejoignez notre Réserve de Talents</h2>
-                            <p>Rejoignez notre réserve de talents en soumettant simplement votre CV. Nous vous informerons des nouvelles opportunités correspondant à votre profil et vous tiendrons informé si vous êtes le candidat idéal pour l'un de nos postes ouverts.</p>
+                            <p>Rejoignez notre réserve de talents en soumettant simplement votre CV. Nous vous informerons des nouvelles opportunités correspondant à votre profil.</p>
                         </div>
                         <div className="wpo-support-btn">
                             <Link href="/spontanee">Soumettre votre CV</Link>
                         </div>
-
                     </div>
                 </div>
             </section>
-
-            {/* Job Details Modal */}
-            {showJobModal && selectedJob && (
-                <div className="modal" style={modalStyles} onClick={closeModal}>
-                    <div className="modal-content" style={modalContentStyles} onClick={(e) => e.stopPropagation()}>
-                        <span
-                            className="close"
-                            onClick={closeModal}
-                            style={closeButtonStyles}
-                        >
-                            &times;
-                        </span>
-                        <h2>{selectedJob.role}</h2>
-                        <div style={{ marginTop: '20px', textAlign: 'left' }}>
-                            <p><strong>Localisation:</strong> {selectedJob.location}</p>
-                            <p><strong>Département:</strong> {selectedJob.department}</p>
-                        </div>
-                        <div style={{ marginTop: '30px' }}>
-                            <form onSubmit={handleSubmit}>
-                                <TextField
-                                    fullWidth
-                                    label="Nom complet"
-                                    name="name"
-                                    value={formValues.name}
-                                    onChange={handleChange}
-                                    margin="normal"
-                                    required
-                                />
-                                <TextField
-                                    fullWidth
-                                    label="Email"
-                                    name="email"
-                                    type="email"
-                                    value={formValues.email}
-                                    onChange={handleChange}
-                                    margin="normal"
-                                    required
-                                />
-                                <TextField
-                                    fullWidth
-                                    label="Téléphone"
-                                    name="phone"
-                                    value={formValues.phone}
-                                    onChange={handleChange}
-                                    margin="normal"
-                                    required
-                                />
-                                <TextField
-                                    fullWidth
-                                    label="CV (lien ou description)"
-                                    name="cv"
-                                    value={formValues.cv}
-                                    onChange={handleChange}
-                                    margin="normal"
-                                    multiline
-                                    rows={3}
-                                    required
-                                />
-                                <div style={{ marginTop: '20px', display: 'flex', gap: '10px' }}>
-                                    <Button
-                                        type="submit"
-                                        variant="contained"
-                                        style={{ backgroundColor: '#BF9043', color: '#fff', flex: 1 }}
-                                    >
-                                        Postuler
-                                    </Button>
-                                    <Button
-                                        variant="outlined"
-                                        onClick={closeModal}
-                                        style={{ flex: 1 }}
-                                    >
-                                        Annuler
-                                    </Button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            )}
-       
         </div>
     );
-};
-
-const modalStyles = {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    backgroundColor: "rgba(0,0,0,0.5)",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    zIndex: 1000
-};
-
-const modalContentStyles = {
-    backgroundColor: "#fff",
-    padding: "30px",
-    borderRadius: "8px",
-    maxWidth: "600px",
-    width: "90%",
-    maxHeight: "90vh",
-    overflowY: "auto",
-    position: "relative"
-};
-
-const closeButtonStyles = {
-    position: "absolute",
-    top: "10px",
-    right: "20px",
-    fontSize: "2rem",
-    cursor: "pointer",
-    color: "#666",
-    background: "none",
-    border: "none",
-    lineHeight: "1"
 };
 
 export default TableCarriere;

@@ -16,7 +16,7 @@ const PricingPage =() => {
     
     const breadcrumbData = getBreadcrumbStructuredData([
         { name: 'Accueil', url: '/' },
-        { name: 'Carrières', url: '/carriere' }
+        { name: 'Candidature', url: '/conditature' }
     ]);
     
     return(
