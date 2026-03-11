@@ -63,7 +63,6 @@ const Footer = (props) => {
                                 <li>Politique de confidentialité</li>
                                 <li>Politique de cookies</li>
                                 <li> <Link onClick={ClickHandler} href="/conditature">Les Offres d'emplois</Link></li>
-                                <li> <Link onClick={ClickHandler} href="/spontanee">Candidature spontanée</Link></li>
                                 
                                 </ul>
                             </div>

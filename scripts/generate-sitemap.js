@@ -53,7 +53,7 @@ const staticPages = [
   { url: '/contact', changefreq: 'monthly', priority: '0.7' },
   { url: '/conditature', changefreq: 'weekly', priority: '0.7' },
   { url: '/nosentreprise', changefreq: 'monthly', priority: '0.7' },
-  { url: '/spontanee', changefreq: 'monthly', priority: '0.6' },
+
 ];
 
 // Generate sitemap XML

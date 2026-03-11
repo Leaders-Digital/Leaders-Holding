@@ -282,19 +282,6 @@ const OfferDetailPage = () => {
                                 </span>
                             </Link>
 
-                            {/* Spontanée link */}
-                            <Link href="/spontanee">
-                                <span style={{
-                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                    gap: 8, padding: '13px', background: '#fff', color: BRAND,
-                                    border: `1.5px solid ${BRAND}`, borderRadius: 10,
-                                    fontWeight: 600, fontSize: 14, cursor: 'pointer',
-                                    width: '100%', boxSizing: 'border-box',
-                                }}>
-                                    <i className="ti-export" style={{ fontSize: 13 }} />
-                                    Candidature Spontanée
-                                </span>
-                            </Link>
                         </div>
                     </div>
                 )}

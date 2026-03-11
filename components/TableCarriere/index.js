@@ -128,16 +128,6 @@ const TableCarriere = () => {
                             </p>
                         )}
                     </div>
-                    <Link href="/spontanee">
-                        <span style={{
-                            display: 'inline-block', padding: '11px 22px',
-                            background: BRAND, color: '#fff', borderRadius: 8,
-                            fontWeight: 700, fontSize: 14, cursor: 'pointer',
-                        }}>
-                            Candidature Spontanée
-                            <i className="ti-arrow-right" style={{ marginLeft: 8, fontSize: 12 }} />
-                        </span>
-                    </Link>
                 </div>
 
                 {/* Error */}
@@ -165,7 +155,7 @@ const TableCarriere = () => {
                     <div style={{ textAlign: 'center', padding: '60px 0', color: '#888' }}>
                         <i className="ti-search" style={{ fontSize: 52, color: '#ccc', display: 'block', marginBottom: 16 }} />
                         <h3 style={{ color: '#555', marginBottom: 8 }}>Aucune offre trouvée</h3>
-                        <p style={{ fontSize: 14 }}>Essayez d'autres critères ou consultez nos candidatures spontanées.</p>
+                        <p style={{ fontSize: 14 }}>Essayez d'autres critères de recherche.</p>
                     </div>
                 )}
 
@@ -342,20 +332,6 @@ const TableCarriere = () => {
                 )}
             </div>
 
-            {/* ── Talent pool banner ───────────────────────────────────────── */}
-            <section className="wpo-support-section">
-                <div className="container">
-                    <div className="wpo-support-wrapper">
-                        <div className="wpo-support-text">
-                            <h2>Rejoignez notre Réserve de Talents</h2>
-                            <p>Rejoignez notre réserve de talents en soumettant simplement votre CV. Nous vous informerons des nouvelles opportunités correspondant à votre profil.</p>
-                        </div>
-                        <div className="wpo-support-btn">
-                            <Link href="/spontanee">Soumettre votre CV</Link>
-                        </div>
-                    </div>
-                </div>
-            </section>
         </div>
     );
 };
