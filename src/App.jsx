@@ -130,6 +130,25 @@ const GEO = (() => {
   });
 })();
 
+// Flatten all societies from GEO for globe rendering
+const ALL_SOC = (() => {
+  const flattened = [];
+  let idx = 0;
+  for (const geo of GEO) {
+    for (const soc of geo.societies) {
+      flattened.push({
+        ...soc,
+        idx: idx++,
+        shortName: soc.name.length > 16 ? soc.name.substring(0, 13) + '...' : soc.name,
+      });
+    }
+  }
+  return flattened;
+})();
+
+// Flat array of all society names for navigation
+const FLAT_NAMES = ALL_SOC.map((s) => s.name);
+
 function buildWorld(name) {
   let sec = null, soc = null;
   for (const s of SECTORS) for (const arr of s.societies) if (arr[0] === name) { sec = s; soc = arr; }
@@ -272,6 +291,30 @@ function useNexusField(canvasRef, { nodeDensity = 66, showCore = true } = {}) {
     tick();
     return () => { cancelAnimationFrame(raf); window.removeEventListener('pointermove', onMove); window.removeEventListener('resize', onResize); tex.dispose(); renderer.dispose(); };
   }, [canvasRef, nodeDensity, showCore]);
+}
+
+/* ============================================================
+   GLOBE INTERACTIONS
+   ============================================================ */
+function useGlobe(globeRef) {
+  const suppressInteraction = useRef(false);
+  useEffect(() => {
+    const globe = globeRef.current;
+    if (!globe) return;
+    const onMouseDown = () => { suppressInteraction.current = true; };
+    const onMouseUp = () => { suppressInteraction.current = false; };
+    globe.addEventListener('mousedown', onMouseDown);
+    globe.addEventListener('mouseup', onMouseUp);
+    globe.addEventListener('touchstart', onMouseDown);
+    globe.addEventListener('touchend', onMouseUp);
+    return () => {
+      globe.removeEventListener('mousedown', onMouseDown);
+      globe.removeEventListener('mouseup', onMouseUp);
+      globe.removeEventListener('touchstart', onMouseDown);
+      globe.removeEventListener('touchend', onMouseUp);
+    };
+  }, [globeRef]);
+  return suppressInteraction;
 }
 
 /* ============================================================
