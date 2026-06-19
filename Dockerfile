@@ -1,11 +1,10 @@
 # Stage 1: Dependencies
 FROM node:18-alpine AS deps
-RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Copy package files
 COPY package.json package-lock.json* ./
-RUN npm ci
+RUN if [ -f package-lock.json ]; then npm ci; else npm install; fi
 
 # Stage 2: Builder
 FROM node:18-alpine AS builder
@@ -13,39 +12,16 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Set build-time environment variables
-# NEXT_PUBLIC_* vars must be provided at build time so Next.js can inline them
-ARG NEXT_PUBLIC_API_URL
-ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
-
-# Disable telemetry during build
-ENV NEXT_TELEMETRY_DISABLED 1
-
-# Build the application
+# Build the Vite app
 RUN npm run build
 
 # Stage 3: Runner
-FROM node:18-alpine AS runner
-WORKDIR /app
+FROM nginx:1.27-alpine AS runner
 
-ENV NODE_ENV production
-ENV NEXT_TELEMETRY_DISABLED 1
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/dist /usr/share/nginx/html
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+EXPOSE 80
 
-# Copy necessary files from builder
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./package.json
-
-USER nextjs
-
-EXPOSE 3000
-
-ENV PORT 3000
-ENV HOSTNAME "0.0.0.0"
-
-CMD ["npm", "start"]
+CMD ["nginx", "-g", "daemon off;"]
 
