@@ -131,30 +131,80 @@ const GEO = (() => {
   });
 })();
 
-// Flatten all societies from GEO for globe rendering
 const ALL_SOC = (() => {
-  const flattened = [];
-  let idx = 0;
-  for (const geo of GEO) {
-    for (const soc of geo.societies) {
-      flattened.push({
-        ...soc,
-        idx: idx++,
-        shortName: soc.name.length > 16 ? soc.name.substring(0, 13) + '...' : soc.name,
-      });
-    }
+  const out = []; let idx = 0;
+  for (const s of SECTORS) for (const [name, , lf, P] of s.societies) {
+    out.push({ idx: idx++, name, P, logoUrl: logo(lf), hasLogo: !!lf, initials: initials(name), softA: hexA(P, 0.5), glowA: hexA(P, 0.5), shortName: name.replace(/^Leaders\s+/, '').replace(/^Sté\s+/, '') });
   }
-  return flattened;
+  return out;
 })();
-
-// Flat array of all society names for navigation
 const FLAT_NAMES = ALL_SOC.map((s) => s.name);
+
+function useGlobe(ref) {
+  const suppress = useRef(false);
+  useEffect(() => {
+    const n = ALL_SOC.length, GA = Math.PI * (3 - Math.sqrt(5));
+    const base = [];
+    for (let i = 0; i < n; i++) {
+      const y = 1 - (i / (n - 1)) * 2, r = Math.sqrt(Math.max(0, 1 - y * y)), th = GA * i;
+      base.push({ x: Math.cos(th) * r, y, z: Math.sin(th) * r });
+    }
+    let rx = -0.12, ry = 0, vx = 0, vy = 0, drag = false, last = null, raf;
+    const down = (e) => { const g = ref.current; if (g && g.contains(e.target)) { drag = true; last = { x: e.clientX, y: e.clientY }; g.style.cursor = 'grabbing'; } };
+    const move = (e) => {
+      if (!drag) return;
+      const dx = e.clientX - last.x, dy = e.clientY - last.y;
+      if (Math.abs(dx) + Math.abs(dy) > 3) suppress.current = true;
+      ry += dx * 0.008;
+      rx = Math.max(-0.7, Math.min(0.7, rx + dy * 0.008));
+      vx = dx * 0.008; vy = dy * 0.008;
+      last = { x: e.clientX, y: e.clientY };
+    };
+    const up = () => { if (!drag) return; drag = false; if (ref.current) ref.current.style.cursor = 'grab'; setTimeout(() => { suppress.current = false; }, 70); };
+    window.addEventListener('pointerdown', down);
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+    const loop = () => {
+      const g = ref.current;
+      if (g) {
+        if (!drag) {
+          ry += vx + 0.0016;
+          rx = Math.max(-0.7, Math.min(0.7, rx + vy));
+          vx *= 0.94; vy *= 0.94;
+          if (Math.abs(vx) < 0.0002) vx = 0;
+          if (Math.abs(vy) < 0.0002) vy = 0;
+        }
+        const Rpx = g.clientWidth / 2 * 0.82;
+        const cy = Math.cos(ry), sy = Math.sin(ry), cx = Math.cos(rx), sx = Math.sin(rx);
+        g.querySelectorAll('[data-soc-node]').forEach((el) => {
+          const b = base[+el.getAttribute('data-soc-node')]; if (!b) return;
+          const x1 = b.x * cy + b.z * sy, z1 = -b.x * sy + b.z * cy, y1 = b.y;
+          const y2 = y1 * cx - z1 * sx, z2 = y1 * sx + z1 * cx;
+          const d = (z2 + 1) / 2, sc = 0.58 + d * 0.62;
+          el.style.transform = `translate(-50%,-50%) translate(${(x1 * Rpx).toFixed(1)}px,${(y2 * Rpx).toFixed(1)}px) scale(${sc.toFixed(3)})`;
+          el.style.zIndex = Math.round(d * 100) + 5;
+          el.style.opacity = (0.3 + d * 0.7).toFixed(2);
+          const lb = el.querySelector('[data-soc-label]');
+          if (lb) lb.style.opacity = d < 0.5 ? '0' : ((d - 0.5) / 0.5).toFixed(2);
+        });
+      }
+      raf = requestAnimationFrame(loop);
+    };
+    loop();
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('pointerdown', down);
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+    };
+  }, [ref]);
+  return suppress;
+}
 
 function buildWorld(name) {
   let sec = null, soc = null;
   for (const s of SECTORS) for (const arr of s.societies) if (arr[0] === name) { sec = s; soc = arr; }
-  if (!sec) return null;
-  const [sname, blurb, lf, P, A, B] = soc;
+  if (!sec) return null;  const [sname, blurb, lf, P, A, B] = soc;
   const isLux = name === 'Leaders Luxury';
   const baseLayout = [
     { gc: 'span 7', gr: 'span 2', minh: 300, size: 30 },
@@ -292,30 +342,6 @@ function useNexusField(canvasRef, { nodeDensity = 66, showCore = true } = {}) {
     tick();
     return () => { cancelAnimationFrame(raf); window.removeEventListener('pointermove', onMove); window.removeEventListener('resize', onResize); tex.dispose(); renderer.dispose(); };
   }, [canvasRef, nodeDensity, showCore]);
-}
-
-/* ============================================================
-   GLOBE INTERACTIONS
-   ============================================================ */
-function useGlobe(globeRef) {
-  const suppressInteraction = useRef(false);
-  useEffect(() => {
-    const globe = globeRef.current;
-    if (!globe) return;
-    const onMouseDown = () => { suppressInteraction.current = true; };
-    const onMouseUp = () => { suppressInteraction.current = false; };
-    globe.addEventListener('mousedown', onMouseDown);
-    globe.addEventListener('mouseup', onMouseUp);
-    globe.addEventListener('touchstart', onMouseDown);
-    globe.addEventListener('touchend', onMouseUp);
-    return () => {
-      globe.removeEventListener('mousedown', onMouseDown);
-      globe.removeEventListener('mouseup', onMouseUp);
-      globe.removeEventListener('touchstart', onMouseDown);
-      globe.removeEventListener('touchend', onMouseUp);
-    };
-  }, [globeRef]);
-  return suppressInteraction;
 }
 
 /* ============================================================
