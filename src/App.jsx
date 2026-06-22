@@ -15,90 +15,90 @@ const holdingLogo = logo('leaders-logo.webp');
    society = [name, blurb, logoFile|null, P(primary), A(accent), B(bg tint)]
    ============================================================ */
 const SECTORS = [
-  { key: 'realestate', name: 'Real Estate & Property', short: 'Real Estate', accent: '#2f6fb0',
-    tag: 'Property, reimagined as portfolio.',
-    about: 'The largest arm of the group — development, brokerage, investment and digital marketplaces across residential and commercial property.',
-    svc: [['Development', 'Ground-up residential and mixed-use projects, end to end.'], ['Brokerage', 'Advisory and transactions for buyers, sellers, investors.'], ['Investment', 'Portfolios structured for long-horizon returns.'], ['Marketplace', 'Digital platforms connecting property to people.']],
+  { key: 'realestate', name: 'Immobilier & Patrimoine', short: 'Immobilier', accent: '#2f6fb0',
+    tag: 'Le patrimoine pensé comme un portefeuille.',
+    about: 'Le plus grand pôle du groupe — développement, courtage, investissement et places de marché numériques pour le résidentiel comme le commercial.',
+    svc: [['Développement', 'Projets résidentiels et mixtes, de A à Z.'], ['Courtage', 'Conseil et transactions pour acheteurs, vendeurs et investisseurs.'], ['Investissement', 'Portefeuilles conçus pour des rendements de long terme.'], ['Plateforme', 'Des outils numériques qui relient le bien à ses publics.']],
     societies: [
       ['Leaders Immobilier', 'Flagship development & sales.', 'immobilier.webp', '#2f6fb0', '#6b7178', '#eef3f9'],
-      ['Le Portail Immobilier', 'Digital property marketplace.', 'port.webp', '#16294d', '#1a9fd4', '#edf1f8'],
-      ['Le Coin Immobilier', 'Neighborhood-scale listings.', 'lecoin.webp', '#1f2d5a', '#f0b21f', '#f1f3f9'],
-      ['Negoce Immobilier', 'Transactions & negotiation.', 'negoce.webp', '#1c2d54', '#c8202e', '#f3f3f7'],
-      ['Inna Immobilier', 'Boutique acquisitions.', 'inna.webp', '#1a1a1a', '#e2231a', '#f5f3f3'],
-      ['Global Leaders Trade', 'Investment & global trade.', 'global-trade.png', '#1f3566', '#d4a431', '#eff2f8'],
-      ['Gratia Immobilier', 'Residential advisory.', null, '#2f6fb0', '#8aa6c4', '#eef3f9'],
-      ['Sté Promotion Ben Ismail', 'Property promotion & development.', null, '#1c2d54', '#9aa6b8', '#eef2f8'],
+      ['Le Portail Immobilier', 'Place de marché immobilière numérique.', 'port.webp', '#16294d', '#1a9fd4', '#edf1f8'],
+      ['Le Coin Immobilier', 'Annonces à l’échelle du quartier.', 'lecoin.webp', '#1f2d5a', '#f0b21f', '#f1f3f9'],
+      ['Négoce Immobilier', 'Transactions et négociation.', 'negoce.webp', '#1c2d54', '#c8202e', '#f3f3f7'],
+      ['Inna Immobilier', 'Acquisitions boutique.', 'inna.webp', '#1a1a1a', '#e2231a', '#f5f3f3'],
+      ['Global Leaders Trade', 'Investissement et commerce international.', 'global-trade.png', '#1f3566', '#d4a431', '#eff2f8'],
+      ['Gratia Immobilier', 'Conseil résidentiel.', null, '#2f6fb0', '#8aa6c4', '#eef3f9'],
+      ['Sté Promotion Ben Ismail', 'Promotion et développement immobilier.', null, '#1c2d54', '#9aa6b8', '#eef2f8'],
     ] },
-  { key: 'construction', name: 'Construction & Materials', short: 'Construction', accent: '#c9a24a',
-    tag: 'We build what the city stands on.',
-    about: 'General contracting and the fabrication that makes modern façades possible — structure, aluminium, and glazing systems.',
-    svc: [['General Contracting', 'Large-scale construction, residential and commercial.'], ['Aluminium & Glazing', 'Curtain-wall systems and precision-cut façades.'], ['Structural Works', 'Foundations and frames engineered to last.'], ['Finishing', 'The details that turn structure into architecture.']],
+  { key: 'construction', name: 'Construction & Matériaux', short: 'Construction', accent: '#c9a24a',
+    tag: 'Nous bâtissons ce sur quoi la ville repose.',
+    about: 'Entreprise générale et fabrication qui rendent les façades modernes possibles — structure, aluminium et systèmes de vitrage.',
+    svc: [['Entreprise générale', 'Construction de grande ampleur, résidentielle et tertiaire.'], ['Aluminium & vitrage', 'Murs-rideaux et façades de précision.'], ['Ouvrages structurels', 'Fondations et ossatures conçues pour durer.'], ['Finitions', 'Les détails qui transforment la structure en architecture.']],
     societies: [
       ['Leaders Building', 'General contracting at scale.', 'building.webp', '#1f2228', '#c9a24a', '#f4f3ee'],
       ['Leaders Diamant Aluminium', 'Aluminium & curtain-wall fabrication.', 'diamant.webp', '#1c1f24', '#2f8fd4', '#eef2f6'],
     ] },
-  { key: 'energy', name: 'Energy & Electric', short: 'Energy', accent: '#2f4fd0',
-    tag: 'The current that runs through it all.',
-    about: 'Electrical installation and infrastructure for every Leaders project, end to end — power, distribution, and smart systems.',
-    svc: [['Installation', 'Electrical fit-out for residential & commercial.'], ['Infrastructure', 'Distribution, substations, and grid ties.'], ['Smart Systems', 'Automation and energy management.'], ['Maintenance', 'Inspection and upkeep, group-wide.']],
+  { key: 'energy', name: 'Énergie & Électricité', short: 'Énergie', accent: '#2f4fd0',
+    tag: 'Le courant qui relie tout.',
+    about: 'Installation électrique et infrastructures pour chaque projet Leaders, de bout en bout — puissance, distribution et systèmes intelligents.',
+    svc: [['Installation', 'Équipements électriques pour le résidentiel et le tertiaire.'], ['Infrastructure', 'Distribution, postes et raccordement au réseau.'], ['Systèmes intelligents', 'Automatisation et gestion énergétique.'], ['Maintenance', 'Inspection et entretien à l’échelle du groupe.']],
     societies: [['Leaders Extra Electric', 'Electrical installation & infrastructure.', 'extra.webp', '#2f4fd0', '#5bc23a', '#eef1fb']] },
-  { key: 'technology', name: 'Technology & Digital', short: 'Technology', accent: '#6a3fb5',
-    tag: 'The systems behind the buildings.',
-    about: 'Software, digital infrastructure, and the engineering backbone that keeps every society connected and running.',
-    svc: [['Software', 'Custom platforms and internal systems.'], ['Infrastructure', 'Cloud, networks, and digital backbone.'], ['Product', 'Customer-facing digital experiences.'], ['Data', 'Analytics that inform every decision.']],
+  { key: 'technology', name: 'Technologie & Digital', short: 'Technologie', accent: '#6a3fb5',
+    tag: 'Les systèmes derrière les bâtiments.',
+    about: 'Logiciels, infrastructures numériques et colonne vertébrale technique qui gardent chaque société connectée et opérationnelle.',
+    svc: [['Logiciel', 'Plateformes sur mesure et systèmes internes.'], ['Infrastructure', 'Cloud, réseaux et socle numérique.'], ['Produit', 'Expériences numériques orientées client.'], ['Données', 'Analyses qui éclairent chaque décision.']],
     societies: [['Leaders Digital', 'Software & digital infrastructure.', 'digital.webp', '#6a3fb5', '#4db4e8', '#f3f0fa']] },
   { key: 'commerce', name: 'Import / Export & Commerce', short: 'Commerce', accent: '#1f7ab0',
-    tag: 'Goods, moving with intent.',
-    about: 'General commerce, import and export — sourcing, logistics, and trade linking the group’s products to markets at home and abroad.',
-    svc: [['Import', 'Sourcing quality goods from global partners.'], ['Export', 'Bringing group products to new markets.'], ['Logistics', 'Freight, customs, and last-mile coordination.'], ['Distribution', 'Wholesale and retail networks.']],
+    tag: 'Des marchandises qui avancent avec intention.',
+    about: 'Commerce général, import et export — sourcing, logistique et trade reliant les produits du groupe aux marchés locaux et internationaux.',
+    svc: [['Import', 'Approvisionnement auprès de partenaires internationaux de confiance.'], ['Export', 'Ouverture des produits du groupe vers de nouveaux marchés.'], ['Logistique', 'Fret, douane et coordination du dernier kilomètre.'], ['Distribution', 'Réseaux de gros et de détail.']],
     societies: [['Leaders Import Export', 'Import, export & logistics.', 'import-export.webp', '#173042', '#1f9ad6', '#eef2f5']] },
-  { key: 'seafood', name: 'Seafood & Fishing', short: 'Seafood', accent: '#1d8aa0',
-    tag: 'From the sea, responsibly.',
-    about: 'A fishing and seafood operation built on responsible sourcing — fresh supply, cold-chain integrity, and coastal partnerships.',
-    svc: [['Fishing', 'Responsible catch and sourcing.'], ['Cold Chain', 'Integrity from boat to buyer.'], ['Processing', 'Cleaning, grading, and packing.'], ['Distribution', 'Fresh supply to market.']],
+  { key: 'seafood', name: 'Pêche & Produits de la mer', short: 'Mer', accent: '#1d8aa0',
+    tag: 'De la mer, de manière responsable.',
+    about: 'Une activité de pêche et de produits de la mer fondée sur un sourcing responsable — fraîcheur, chaîne du froid et partenariats côtiers.',
+    svc: [['Pêche', 'Capture et approvisionnement responsables.'], ['Chaîne du froid', 'Intégrité du bateau jusqu’au client.'], ['Transformation', 'Nettoyage, tri et conditionnement.'], ['Distribution', 'Approvisionnement frais pour le marché.']],
     societies: [['Leaders Fish', 'Responsible fishing & seafood supply.', 'fish.webp', '#1d7a8c', '#28b6c8', '#ecf5f7']] },
-  { key: 'agriculture', name: 'Agriculture & Agribusiness', short: 'Agriculture', accent: '#8a8f4d',
-    tag: 'Growth that starts at the root.',
-    about: 'Sustainable agriculture and elite farmland management — productive land, responsible practice, and long-term supply chains.',
-    svc: [['Farmland', 'Elite farmland acquisition and stewardship.'], ['Production', 'Sustainable, high-yield output.'], ['Agritech', 'Data-led practice for healthier yields.'], ['Supply', 'Distribution from field to market.']],
+  { key: 'agriculture', name: 'Agriculture & Agroalimentaire', short: 'Agriculture', accent: '#8a8f4d',
+    tag: 'La croissance commence à la racine.',
+    about: 'Agriculture durable et gestion de terres d’exception — foncier productif, pratiques responsables et chaînes d’approvisionnement de long terme.',
+    svc: [['Foncier', 'Acquisition et gestion de terres d’exception.'], ['Production', 'Résultats durables et à haut rendement.'], ['Agritech', 'Des pratiques guidées par la donnée pour de meilleurs rendements.'], ['Approvisionnement', 'Distribution du champ au marché.']],
     societies: [['Leaders Agro Elite', 'Sustainable farmland & agribusiness.', 'agro.webp', '#4a5a3a', '#8a8f4d', '#f1f2ec']] },
-  { key: 'cosmetics', name: 'Cosmetics & Beauty', short: 'Cosmetics', accent: '#c9a24a',
-    tag: 'Beauty, formulated.',
-    about: 'A cosmetics and beauty line — formulation, brand, and retail for a modern, discerning customer.',
-    svc: [['Formulation', 'Clean, considered product development.'], ['Brand', 'Identity and storytelling.'], ['Retail', 'Boutique and digital presence.'], ['Care', 'After-sale and community.']],
+  { key: 'cosmetics', name: 'Cosmétique & Beauté', short: 'Beauté', accent: '#c9a24a',
+    tag: 'La beauté, formulée.',
+    about: 'Une ligne cosmétique et beauté — formulation, marque et distribution pour une clientèle moderne et exigeante.',
+    svc: [['Formulation', 'Développement produit propre et réfléchi.'], ['Marque', 'Identité et récit de marque.'], ['Distribution', 'Présence boutique et numérique.'], ['Soin', 'Après-vente et communauté.']],
     societies: [['Leaders Makeup', 'Cosmetics & beauty line.', 'makeup.webp', '#1a1a1a', '#c9a24a', '#f6f4ef']] },
-  { key: 'consulting', name: 'Consulting, Studies & Services', short: 'Consulting', accent: '#2f5fa8',
-    tag: 'Every project starts as a study.',
-    about: 'Engineering studies, feasibility, strategy, climate works and operational services — the professional layer that de-risks and shapes everything the group builds.',
-    svc: [['Studies', 'Engineering, feasibility, and technical design.'], ['Strategy', 'Corporate and project advisory.'], ['Multi-Trade', 'HVAC, climate, and integrated works.'], ['Services', 'Operational support across the group.']],
+  { key: 'consulting', name: 'Conseil, Études & Services', short: 'Conseil', accent: '#2f5fa8',
+    tag: 'Chaque projet commence par une étude.',
+    about: 'Études d’ingénierie, faisabilité, stratégie, travaux climatiques et services opérationnels — la couche professionnelle qui réduit le risque et façonne tout ce que le groupe construit.',
+    svc: [['Études', 'Ingénierie, faisabilité et conception technique.'], ['Stratégie', 'Conseil corporate et projet.'], ['Multi-technique', 'CVC, climatisation et lots intégrés.'], ['Services', 'Support opérationnel pour l’ensemble du groupe.']],
     societies: [
       ['Nexting Etude', 'Engineering & feasibility studies.', 'nexting.webp', '#1f3a66', '#5b6770', '#eef1f6'],
       ['Gratia Service', 'Operational support services.', 'gratia.webp', '#2f5fa8', '#d23b3b', '#f1f3f8'],
       ['Leaders Business', 'Corporate strategy & advisory.', 'business.webp', '#5b626b', '#9aa0a8', '#f2f3f5'],
       ['Leaders Multiworks', 'HVAC, climate & multi-trade works.', 'multi.webp', '#1a4f8b', '#e23b2e', '#eef2f7'],
     ] },
-  { key: 'automotive', name: 'Automotive & Luxury Transport', short: 'Automotive', accent: '#b25b49',
-    tag: 'Mobility, curated.',
-    about: 'Luxury vehicles and bespoke transport — a curated fleet and acquisition service for a clientele that expects the exceptional.',
-    svc: [['Luxury Sales', 'Curated inventory of exceptional vehicles.'], ['Acquisition', 'Sourcing rare and bespoke models worldwide.'], ['Concierge', 'White-glove ownership and delivery.'], ['Fleet', 'Managed fleets for partners and developments.']],
+  { key: 'automotive', name: 'Automobile & Transport de luxe', short: 'Automobile', accent: '#b25b49',
+    tag: 'Une mobilité choisie avec soin.',
+    about: 'Véhicules de luxe et transport sur mesure — une flotte sélectionnée et un service d’acquisition pour une clientèle qui attend l’exception.',
+    svc: [['Vente luxe', 'Sélection de véhicules d’exception.'], ['Acquisition', 'Recherche de modèles rares et sur mesure dans le monde entier.'], ['Conciergerie', 'Livraison et accompagnement haut de gamme.'], ['Flotte', 'Flottes gérées pour partenaires et projets.']],
     societies: [['Leaders Luxury Cars', 'Luxury vehicles & acquisition.', null, '#1f2228', '#b25b49', '#f6f1ef']] },
-  { key: 'timber', name: 'Timber & Woodworking', short: 'Timber', accent: '#8a5a2b',
-    tag: 'Working with the grain.',
-    about: 'Timber sourcing and fine woodworking — raw material to finished joinery for the group’s developments and beyond.',
-    svc: [['Sourcing', 'Responsibly sourced timber stock.'], ['Milling', 'Cutting and treatment to spec.'], ['Joinery', 'Bespoke furniture and fit-out.'], ['Supply', 'Material for group projects.']],
+  { key: 'timber', name: 'Bois & Menuiserie', short: 'Bois', accent: '#8a5a2b',
+    tag: 'Travailler avec le fil du bois.',
+    about: 'Approvisionnement en bois et menuiserie fine — de la matière brute à la finition pour les développements du groupe et au-delà.',
+    svc: [['Approvisionnement', 'Stock de bois issu de sources responsables.'], ['Débit', 'Découpe et traitement selon les spécifications.'], ['Menuiserie', 'Mobilier sur mesure et aménagement.'], ['Fourniture', 'Matériaux pour les projets du groupe.']],
     societies: [['Leaders Wood', 'Timber sourcing & fine woodworking.', null, '#8a5a2b', '#4a7c3a', '#f4f1eb']] },
-  { key: 'travel', name: 'Travel & Tourism', short: 'Travel', accent: '#2f9ad0',
-    tag: 'The world, well arranged.',
-    about: 'Travel and tourism services — journeys, stays, and experiences organised to the group’s standard.',
-    svc: [['Travel', 'Curated journeys and packages.'], ['Stays', 'Hand-picked accommodation.'], ['Corporate', 'Business travel management.'], ['Experiences', 'Bespoke itineraries.']],
+  { key: 'travel', name: 'Voyage & Tourisme', short: 'Voyage', accent: '#2f9ad0',
+    tag: 'Le monde, bien organisé.',
+    about: 'Services de voyage et de tourisme — séjours, déplacements et expériences organisés selon les standards du groupe.',
+    svc: [['Voyage', 'Circuits et formules sélectionnés.'], ['Séjours', 'Hébergements choisis avec soin.'], ['Corporate', 'Gestion des déplacements professionnels.'], ['Expériences', 'Itinéraires sur mesure.']],
     societies: [['Leaders Travel', 'Travel & tourism services.', null, '#2f9ad0', '#f0a51f', '#eef4f9']] },
-  { key: 'holdings', name: 'Holdings & Luxury', short: 'Holdings', accent: '#C5A039',
-    tag: 'The address behind the addresses.',
-    about: 'The corporate core — the holding company and its luxury lifestyle brand that set the standard for the entire ecosystem.',
-    svc: [['Governance', 'Direction and oversight for the group.'], ['Capital', 'Allocation across the portfolio.'], ['Luxury', 'Lifestyle and high-end residences.'], ['Brand', 'The Leaders standard, group-wide.']],
+  { key: 'holdings', name: 'Holding & Luxe', short: 'Holding', accent: '#C5A039',
+    tag: 'L’adresse derrière les adresses.',
+    about: 'Le noyau corporate — la société holding et sa marque lifestyle luxe qui fixent le standard de tout l’écosystème.',
+    svc: [['Gouvernance', 'Direction et supervision du groupe.'], ['Capital', 'Allocation à travers le portefeuille.'], ['Luxe', 'Art de vivre et résidences haut de gamme.'], ['Marque', 'Le standard Leaders, à l’échelle du groupe.']],
     societies: [
-      ['Leaders Holding', 'The corporate nucleus of the group.', 'leaders-logo.webp', '#b8901f', '#14181f', '#fbf8ef'],
-      ['Leaders Luxury', 'Lifestyle & high-end residences.', 'luxury.webp', '#b9923a', '#1f2228', '#f8f5ee'],
+      ['Leaders Holding', 'Le noyau corporate du groupe.', 'leaders-logo.webp', '#b8901f', '#14181f', '#fbf8ef'],
+      ['Leaders Luxury', 'Art de vivre et résidences haut de gamme.', 'luxury.webp', '#b9923a', '#1f2228', '#f8f5ee'],
     ] },
 ];
 
@@ -262,7 +262,7 @@ const TIMELINE = [
   { year: '2023', items: ['Inna Immobilier', 'Sté Promotion Ben Ismail', 'Leaders Business'] },
   { year: '2024', items: ['Leaders Makeup', 'Gratia Immobilier', 'Leaders Import Export', 'Gratia Service', 'Leaders Travel'] },
 ];
-const GROUP_STATS = [{ v: '25', k: 'Societies' }, { v: '13', k: 'Sectors' }, { v: '2020', k: 'Established' }, { v: 'Tunis', k: 'Headquarters' }];
+const GROUP_STATS = [{ v: '25', k: 'Sociétés' }, { v: '13', k: 'Secteurs' }, { v: '2020', k: 'Création' }, { v: 'Tunis', k: 'Siège' }];
 const CONTACT = { address: 'Cité des Pins, Les Berges du Lac 2 — 1053 Tunis, Tunisie', email: 'contact@leadersholding.tn', phone: '+216 27 360 038' };
 
 /* ============================================================
@@ -446,7 +446,7 @@ function Home() {
           <video ref={introVidRef} src="/intro.mp4" autoPlay loop muted playsInline style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
           <div className={videoReady ? 'lh-loader lh-loader-hidden' : 'lh-loader'} style={{ position: 'absolute', inset: 0, zIndex: 5, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 24, background: '#0b0b0d' }}>
             <img src={holdingLogo} alt="Leaders Holding" style={{ height: 78, width: 'auto', display: 'block', animation: 'lh-logopulse 2.2s ease-in-out infinite', filter: 'drop-shadow(0 6px 26px rgba(197,160,57,0.4))' }} />
-            <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.36em', textTransform: 'uppercase', color: 'rgba(233,200,121,0.85)' }}>Many companies · one vision</div>
+            <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.36em', textTransform: 'uppercase', color: 'rgba(233,200,121,0.85)' }}>Plusieurs sociétés · une vision</div>
             <div style={{ display: 'flex', gap: 8, marginTop: 4 }}>
               <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#C5A039', display: 'block', animation: 'lh-loaddot 1.2s ease-in-out infinite' }} />
               <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#C5A039', display: 'block', animation: 'lh-loaddot 1.2s ease-in-out 0.18s infinite' }} />
@@ -454,8 +454,8 @@ function Home() {
             </div>
           </div>
           <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'radial-gradient(ellipse at 50% 50%,rgba(11,11,13,0) 38%,rgba(11,11,13,0.55) 100%)' }} />
-          <div onClick={enterSite} style={{ position: 'absolute', bottom: '8vh', left: '50%', transform: 'translateX(-50%)', display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', fontFamily: MONO, fontSize: 12, letterSpacing: '0.28em', textTransform: 'uppercase', color: '#0b0b0d', padding: '16px 34px', borderRadius: 100, background: 'linear-gradient(115deg,#E9C879,#C5A039)', boxShadow: '0 16px 40px -12px rgba(197,160,57,0.6)' }}>Enter the Nexus →</div>
-          <div onClick={enterSite} style={{ position: 'absolute', top: 28, right: 34, zIndex: 6, cursor: 'pointer', fontFamily: MONO, fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.65)' }}>Skip →</div>
+          <div onClick={enterSite} style={{ position: 'absolute', bottom: '8vh', left: '50%', transform: 'translateX(-50%)', display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', fontFamily: MONO, fontSize: 12, letterSpacing: '0.28em', textTransform: 'uppercase', color: '#0b0b0d', padding: '16px 34px', borderRadius: 100, background: 'linear-gradient(115deg,#E9C879,#C5A039)', boxShadow: '0 16px 40px -12px rgba(197,160,57,0.6)' }}>Entrer dans le Nexus →</div>
+          <div onClick={enterSite} style={{ position: 'absolute', top: 28, right: 34, zIndex: 6, cursor: 'pointer', fontFamily: MONO, fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.65)' }}>Passer →</div>
         </div>
       )}
 
@@ -465,11 +465,11 @@ function Home() {
           <img src={holdingLogo} alt="Leaders Holding" style={{ height: 46, width: 'auto', display: 'block', filter: 'drop-shadow(0 4px 14px rgba(160,120,30,0.22))' }} />
           <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
             <span style={{ fontSize: 13, fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#14181f', lineHeight: 1 }}>Leaders Holding</span>
-            <span className="lh-hud-sub" style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.32em', textTransform: 'uppercase', color: 'rgba(20,24,31,0.42)', lineHeight: 1 }}>Many companies · one vision</span>
+            <span className="lh-hud-sub" style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.32em', textTransform: 'uppercase', color: 'rgba(20,24,31,0.42)', lineHeight: 1 }}>Plusieurs sociétés · une vision</span>
           </div>
         </div>
         <div className="lh-hud-actions" style={{ display: 'flex', alignItems: 'center', gap: 18, pointerEvents: 'auto' }}>
-          <span className="lh-hud-count" style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.26em', textTransform: 'uppercase', color: 'rgba(20,24,31,0.5)' }}>25 Societies · 13 Sectors</span>
+          <span className="lh-hud-count" style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.26em', textTransform: 'uppercase', color: 'rgba(20,24,31,0.5)' }}>25 sociétés · 13 secteurs</span>
           <a href="#recrutement" className="lh-pill" style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#14181f', textDecoration: 'none', padding: '11px 18px', borderRadius: 100, background: 'rgba(255,255,255,0.6)', backdropFilter: 'blur(20px) saturate(160%)', WebkitBackdropFilter: 'blur(20px) saturate(160%)', boxShadow: '0 8px 24px -10px rgba(30,45,70,0.3), inset 0 1px 0 rgba(255,255,255,0.8)' }}>Carrières</a>
           <button className="lh-pill" onClick={() => setMenuOpen((v) => !v)} style={{ display: 'flex', alignItems: 'center', gap: 10, border: 'none', cursor: 'pointer', fontFamily: MONO, fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#14181f', padding: '11px 18px', borderRadius: 100, background: 'rgba(255,255,255,0.6)', backdropFilter: 'blur(20px) saturate(160%)', WebkitBackdropFilter: 'blur(20px) saturate(160%)', boxShadow: '0 8px 24px -10px rgba(30,45,70,0.3), inset 0 1px 0 rgba(255,255,255,0.8)' }}>
             <span style={{ display: 'inline-flex', flexDirection: 'column', gap: 3, width: 14 }}>
@@ -477,7 +477,7 @@ function Home() {
               <span style={{ height: 1.5, width: 9, background: '#C5A039', display: 'block' }} />
               <span style={{ height: 1.5, width: 14, background: '#C5A039', display: 'block' }} />
             </span>
-            Nexus Index
+            Index Nexus
           </button>
         </div>
       </header>
@@ -502,17 +502,17 @@ function Home() {
           </div>
 
           <div className="lh-hero-panel" style={{ position: 'absolute', left: 40, bottom: 40, maxWidth: 392, padding: '30px 32px 32px', borderRadius: 22, background: 'rgba(255,255,255,0.5)', backdropFilter: 'blur(26px) saturate(160%)', WebkitBackdropFilter: 'blur(26px) saturate(160%)', border: '1px solid rgba(255,255,255,0.7)', boxShadow: '0 30px 70px -28px rgba(30,45,70,0.4), inset 0 1px 0 rgba(255,255,255,0.7)', animation: 'lh-rise 0.9s cubic-bezier(.22,1,.36,1) both' }}>
-            <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#C5A039', marginBottom: 16 }}>The Holding Map</div>
-            <h1 style={{ fontSize: 38, lineHeight: 1.04, fontWeight: 600, letterSpacing: '-0.035em', color: '#14181f' }}>Many companies.<br />One <span style={goldText}>vision.</span></h1>
-            <p style={{ marginTop: 16, fontSize: 14.5, lineHeight: 1.62, fontWeight: 400, color: 'rgba(20,24,31,0.66)' }}>A single ecosystem of 25 societies across 13 sectors. Each carries its own brand and world — explore the map, then scroll for the full story.</p>
+            <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#C5A039', marginBottom: 16 }}>La carte de la holding</div>
+            <h1 style={{ fontSize: 38, lineHeight: 1.04, fontWeight: 600, letterSpacing: '-0.035em', color: '#14181f' }}>Plusieurs sociétés.<br />Une <span style={goldText}>vision.</span></h1>
+            <p style={{ marginTop: 16, fontSize: 14.5, lineHeight: 1.62, fontWeight: 400, color: 'rgba(20,24,31,0.66)' }}>Un écosystème unique de 25 sociétés réparties sur 13 secteurs. Chacune porte sa marque et son univers — explorez la carte, puis faites défiler pour découvrir l’histoire complète.</p>
             <div style={{ marginTop: 20, display: 'flex', alignItems: 'center', gap: 10, fontFamily: MONO, fontSize: 10.5, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(20,24,31,0.5)' }}>
               <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#C5A039', display: 'block', animation: 'lh-pulse 2.6s ease-out infinite' }} />
-              Drag the nexus · click a company
+              Faites glisser le Nexus · cliquez sur une société
             </div>
           </div>
 
           <div style={{ position: 'absolute', left: '50%', bottom: 26, transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 9, pointerEvents: 'none', fontFamily: MONO, fontSize: 10, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'rgba(20,24,31,0.45)' }}>
-            Scroll to explore
+            Faites défiler pour explorer
             <span style={{ width: 1, height: 36, background: 'linear-gradient(180deg,rgba(197,160,57,0.7),transparent)' }} />
           </div>
           </section>
@@ -522,9 +522,9 @@ function Home() {
             {/* ONE VISION */}
             <section className="lh-sec" style={{ maxWidth: 1080, margin: '0 auto', padding: '130px 40px 80px' }}>
               <div style={reveal('entry 2% cover 20%')}>
-                <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#C5A039', marginBottom: 18 }}>The Group</div>
-                <h2 style={{ fontSize: 'clamp(34px,5vw,62px)', lineHeight: 1.02, fontWeight: 600, letterSpacing: '-0.04em', color: '#14181f', maxWidth: '17ch' }}>One holding.<br />Twenty-five <span style={goldText}>companies.</span></h2>
-                <p style={{ marginTop: 26, fontSize: 'clamp(16px,1.6vw,20px)', lineHeight: 1.6, fontWeight: 400, color: 'rgba(20,24,31,0.62)', maxWidth: '60ch' }}>Leaders Holding is a Tunis-based diversified group. Founded in 2020, it now spans real estate, construction, technology, commerce, agriculture and more — each society its own brand and world, united by a single standard.</p>
+                <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#C5A039', marginBottom: 18 }}>Le groupe</div>
+                <h2 style={{ fontSize: 'clamp(34px,5vw,62px)', lineHeight: 1.02, fontWeight: 600, letterSpacing: '-0.04em', color: '#14181f', maxWidth: '17ch' }}>Une holding.<br />Vingt-cinq <span style={goldText}>sociétés.</span></h2>
+                <p style={{ marginTop: 26, fontSize: 'clamp(16px,1.6vw,20px)', lineHeight: 1.6, fontWeight: 400, color: 'rgba(20,24,31,0.62)', maxWidth: '60ch' }}>Leaders Holding est un groupe diversifié basé à Tunis. Créé en 2020, il couvre aujourd’hui l’immobilier, la construction, la technologie, le commerce, l’agriculture et bien plus encore — chaque société gardant sa propre marque et son propre univers, unies par un standard commun.</p>
               </div>
               <div className="lh-grid-4" style={{ marginTop: 60, display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 24, borderTop: '1px solid rgba(20,24,31,0.1)', paddingTop: 42, ...reveal('entry 0% cover 24%') }}>
                 {GROUP_STATS.map((g) => (
@@ -539,8 +539,8 @@ function Home() {
             {/* TIMELINE */}
             <section className="lh-sec" style={{ maxWidth: 1200, margin: '0 auto', padding: '64px 40px 96px' }}>
               <div style={reveal('entry 0% cover 18%')}>
-                <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#C5A039', marginBottom: 16 }}>Our story</div>
-                <h2 style={{ fontSize: 'clamp(30px,4vw,52px)', lineHeight: 1.04, fontWeight: 600, letterSpacing: '-0.035em', color: '#14181f', maxWidth: '18ch' }}>Built, year by year.</h2>
+                <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#C5A039', marginBottom: 16 }}>Notre histoire</div>
+                <h2 style={{ fontSize: 'clamp(30px,4vw,52px)', lineHeight: 1.04, fontWeight: 600, letterSpacing: '-0.035em', color: '#14181f', maxWidth: '18ch' }}>Construite, année après année.</h2>
               </div>
               <div style={{ marginTop: 52, position: 'relative', display: 'flex', gap: 22, overflowX: 'auto', paddingBottom: 16 }}>
                 <div style={{ position: 'absolute', left: 6, right: 6, top: 34, height: 2, background: 'linear-gradient(90deg,rgba(197,160,57,0.55),rgba(197,160,57,0.1))' }} />
