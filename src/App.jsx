@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
+import Recruitment from './Recruitment.jsx';
 import heroImg from './assets/hero-project.webp';
 
 /* ============================================================
@@ -278,6 +279,17 @@ function useNexusField(canvasRef, { nodeDensity = 66, showCore = true } = {}) {
    APP
    ============================================================ */
 export default function App() {
+  const [route, setRoute] = useState(() => (window.location.hash || '').replace('#', '') || 'home');
+  useEffect(() => {
+    const onHash = () => setRoute((window.location.hash || '').replace('#', '') || 'home');
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
+  if (route === 'recrutement') return <Recruitment />;
+  return <Home />;
+}
+
+function Home() {
   const [view, setView] = useState('hub');
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSectorKey, setActiveSectorKey] = useState(null);
@@ -379,16 +391,17 @@ export default function App() {
       )}
 
       {/* HUD */}
-      <header style={{ position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 120, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '22px 40px', pointerEvents: 'none' }}>
+      <header className="lh-hud" style={{ position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 120, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '22px 40px', pointerEvents: 'none' }}>
         <div onClick={backToHub} style={{ display: 'flex', alignItems: 'center', gap: 13, pointerEvents: 'auto', cursor: 'pointer' }}>
           <img src={holdingLogo} alt="Leaders Holding" style={{ height: 46, width: 'auto', display: 'block', filter: 'drop-shadow(0 4px 14px rgba(160,120,30,0.22))' }} />
           <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
             <span style={{ fontSize: 13, fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#14181f', lineHeight: 1 }}>Leaders Holding</span>
-            <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.32em', textTransform: 'uppercase', color: 'rgba(20,24,31,0.42)', lineHeight: 1 }}>Many companies · one vision</span>
+            <span className="lh-hud-sub" style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.32em', textTransform: 'uppercase', color: 'rgba(20,24,31,0.42)', lineHeight: 1 }}>Many companies · one vision</span>
           </div>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 18, pointerEvents: 'auto' }}>
-          <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.26em', textTransform: 'uppercase', color: 'rgba(20,24,31,0.5)' }}>25 Societies · 13 Sectors</span>
+        <div className="lh-hud-actions" style={{ display: 'flex', alignItems: 'center', gap: 18, pointerEvents: 'auto' }}>
+          <span className="lh-hud-count" style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.26em', textTransform: 'uppercase', color: 'rgba(20,24,31,0.5)' }}>25 Societies · 13 Sectors</span>
+          <a href="#recrutement" className="lh-pill" style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#14181f', textDecoration: 'none', padding: '11px 18px', borderRadius: 100, background: 'rgba(255,255,255,0.6)', backdropFilter: 'blur(20px) saturate(160%)', WebkitBackdropFilter: 'blur(20px) saturate(160%)', boxShadow: '0 8px 24px -10px rgba(30,45,70,0.3), inset 0 1px 0 rgba(255,255,255,0.8)' }}>Carrières</a>
           <button className="lh-pill" onClick={() => setMenuOpen((v) => !v)} style={{ display: 'flex', alignItems: 'center', gap: 10, border: 'none', cursor: 'pointer', fontFamily: MONO, fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#14181f', padding: '11px 18px', borderRadius: 100, background: 'rgba(255,255,255,0.6)', backdropFilter: 'blur(20px) saturate(160%)', WebkitBackdropFilter: 'blur(20px) saturate(160%)', boxShadow: '0 8px 24px -10px rgba(30,45,70,0.3), inset 0 1px 0 rgba(255,255,255,0.8)' }}>
             <span style={{ display: 'inline-flex', flexDirection: 'column', gap: 3, width: 14 }}>
               <span style={{ height: 1.5, width: 14, background: '#C5A039', display: 'block' }} />
@@ -419,7 +432,7 @@ export default function App() {
             ))}
           </div>
 
-          <div style={{ position: 'absolute', left: 40, bottom: 40, maxWidth: 392, padding: '30px 32px 32px', borderRadius: 22, background: 'rgba(255,255,255,0.5)', backdropFilter: 'blur(26px) saturate(160%)', WebkitBackdropFilter: 'blur(26px) saturate(160%)', border: '1px solid rgba(255,255,255,0.7)', boxShadow: '0 30px 70px -28px rgba(30,45,70,0.4), inset 0 1px 0 rgba(255,255,255,0.7)', animation: 'lh-rise 0.9s cubic-bezier(.22,1,.36,1) both' }}>
+          <div className="lh-hero-panel" style={{ position: 'absolute', left: 40, bottom: 40, maxWidth: 392, padding: '30px 32px 32px', borderRadius: 22, background: 'rgba(255,255,255,0.5)', backdropFilter: 'blur(26px) saturate(160%)', WebkitBackdropFilter: 'blur(26px) saturate(160%)', border: '1px solid rgba(255,255,255,0.7)', boxShadow: '0 30px 70px -28px rgba(30,45,70,0.4), inset 0 1px 0 rgba(255,255,255,0.7)', animation: 'lh-rise 0.9s cubic-bezier(.22,1,.36,1) both' }}>
             <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#C5A039', marginBottom: 16 }}>The Holding Map</div>
             <h1 style={{ fontSize: 38, lineHeight: 1.04, fontWeight: 600, letterSpacing: '-0.035em', color: '#14181f' }}>Many companies.<br />One <span style={goldText}>vision.</span></h1>
             <p style={{ marginTop: 16, fontSize: 14.5, lineHeight: 1.62, fontWeight: 400, color: 'rgba(20,24,31,0.66)' }}>A single ecosystem of 25 societies across 13 sectors. Each carries its own brand and world — explore the map, then scroll for the full story.</p>
@@ -438,13 +451,13 @@ export default function App() {
           <div style={{ position: 'relative', background: 'linear-gradient(180deg,rgba(238,241,246,0) 0%,rgba(238,241,246,0.97) 7%,#eef1f6 16%,#e9edf3 100%)' }}>
 
             {/* ONE VISION */}
-            <section style={{ maxWidth: 1080, margin: '0 auto', padding: '130px 40px 80px' }}>
+            <section className="lh-sec" style={{ maxWidth: 1080, margin: '0 auto', padding: '130px 40px 80px' }}>
               <div style={reveal('entry 2% cover 20%')}>
                 <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#C5A039', marginBottom: 18 }}>The Group</div>
                 <h2 style={{ fontSize: 'clamp(34px,5vw,62px)', lineHeight: 1.02, fontWeight: 600, letterSpacing: '-0.04em', color: '#14181f', maxWidth: '17ch' }}>One holding.<br />Twenty-five <span style={goldText}>companies.</span></h2>
                 <p style={{ marginTop: 26, fontSize: 'clamp(16px,1.6vw,20px)', lineHeight: 1.6, fontWeight: 400, color: 'rgba(20,24,31,0.62)', maxWidth: '60ch' }}>Leaders Holding is a Tunis-based diversified group. Founded in 2020, it now spans real estate, construction, technology, commerce, agriculture and more — each society its own brand and world, united by a single standard.</p>
               </div>
-              <div style={{ marginTop: 60, display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 24, borderTop: '1px solid rgba(20,24,31,0.1)', paddingTop: 42, ...reveal('entry 0% cover 24%') }}>
+              <div className="lh-grid-4" style={{ marginTop: 60, display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 24, borderTop: '1px solid rgba(20,24,31,0.1)', paddingTop: 42, ...reveal('entry 0% cover 24%') }}>
                 {GROUP_STATS.map((g) => (
                   <div key={g.k}>
                     <div style={{ fontSize: 'clamp(30px,3.6vw,50px)', fontWeight: 600, letterSpacing: '-0.04em', lineHeight: 1, color: '#14181f' }}>{g.v}</div>
@@ -455,7 +468,7 @@ export default function App() {
             </section>
 
             {/* TIMELINE */}
-            <section style={{ maxWidth: 1200, margin: '0 auto', padding: '64px 40px 96px' }}>
+            <section className="lh-sec" style={{ maxWidth: 1200, margin: '0 auto', padding: '64px 40px 96px' }}>
               <div style={reveal('entry 0% cover 18%')}>
                 <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#C5A039', marginBottom: 16 }}>Our story</div>
                 <h2 style={{ fontSize: 'clamp(30px,4vw,52px)', lineHeight: 1.04, fontWeight: 600, letterSpacing: '-0.035em', color: '#14181f', maxWidth: '18ch' }}>Built, year by year.</h2>
@@ -482,7 +495,7 @@ export default function App() {
             {/* HORIZONTAL PINNED GALLERY */}
             <section id="hscroll-section" style={{ position: 'relative', height: '480vh' }}>
               <div id="hscroll-pin" style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', background: 'linear-gradient(125deg,rgba(197,160,57,0.16) 0%,#f4f6fa 62%)', transition: 'background 0.6s ease' }}>
-                <div style={{ position: 'absolute', top: 34, left: 40, right: 40, zIndex: 6, display: 'flex', alignItems: 'center', justifyContent: 'space-between', pointerEvents: 'none' }}>
+                <div style={{ position: 'absolute', top: 98, left: 40, right: 40, zIndex: 6, display: 'flex', alignItems: 'center', justifyContent: 'space-between', pointerEvents: 'none' }}>
                   <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#C5A039' }}>The ecosystem · in motion</div>
                   <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(20,24,31,0.45)' }}>Keep scrolling ↓</div>
                 </div>
@@ -498,9 +511,9 @@ export default function App() {
                     </div>
                   </div>
                   {GEO.map((s) => (
-                    <div key={s.key} data-accent={s.accent} onClick={() => openSector(s.key)} style={{ flex: 'none', width: '100vw', height: '100%', display: 'flex', alignItems: 'center', gap: '5vw', padding: '0 9vw', boxSizing: 'border-box', cursor: 'pointer', position: 'relative' }}>
+                    <div key={s.key} data-accent={s.accent} onClick={() => openSector(s.key)} className="lh-sector-card" style={{ flex: 'none', width: '100vw', height: '100%', display: 'flex', alignItems: 'center', gap: '5vw', padding: '0 9vw', boxSizing: 'border-box', cursor: 'pointer', position: 'relative' }}>
                       <div style={{ position: 'absolute', top: '50%', right: '5vw', transform: 'translateY(-50%)', width: '40vw', height: '40vw', maxWidth: 560, maxHeight: 560, borderRadius: '50%', background: `radial-gradient(circle,${hexA(s.accent, 0.18)},transparent 68%)`, pointerEvents: 'none' }} />
-                      <div className="lh-hpanel-c" style={{ display: 'flex', alignItems: 'center', gap: '5vw', flex: 1, minWidth: 0, width: '100%', willChange: 'opacity,transform' }}>
+                      <div className="lh-hpanel-c lh-sector-row" style={{ display: 'flex', alignItems: 'center', gap: '5vw', flex: 1, minWidth: 0, width: '100%', willChange: 'opacity,transform' }}>
                       <div style={{ flex: 1, minWidth: 0, position: 'relative' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 28 }}>
                           <span style={{ width: 50, height: 4, borderRadius: 3, background: s.accent, display: 'block' }} />
@@ -510,7 +523,7 @@ export default function App() {
                         <div style={{ fontSize: 'clamp(15px,1.6vw,21px)', color: 'rgba(20,24,31,0.6)', marginTop: 22, maxWidth: '32ch', lineHeight: 1.4 }}>{s.name}</div>
                         <div style={{ marginTop: 32, display: 'inline-flex', alignItems: 'center', gap: 10, fontFamily: MONO, fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: s.accent }}>Enter sector →</div>
                       </div>
-                      <div style={{ flex: 'none', position: 'relative', display: 'flex', flexWrap: 'wrap', gap: 16, maxWidth: 240, justifyContent: 'flex-end' }}>
+                      <div className="lh-sector-logos" style={{ flex: 'none', position: 'relative', display: 'flex', flexWrap: 'wrap', gap: 16, maxWidth: 240, justifyContent: 'flex-end' }}>
                         {s.societies.map((soc) => (
                           <div key={soc.name} style={{ width: 88, height: 88, borderRadius: 18, background: '#fff', boxShadow: '0 16px 40px -18px rgba(30,45,70,0.4), inset 0 0 0 1px rgba(20,24,31,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
                             {soc.hasLogo ? <div style={logoFill(soc.logoUrl, 14)} /> : <span style={{ fontFamily: MONO, fontSize: 20, fontWeight: 500, color: soc.P }}>{soc.initials}</span>}
@@ -528,7 +541,7 @@ export default function App() {
             <section style={{ position: 'relative', height: '86vh', minHeight: 520, overflow: 'hidden', display: 'flex', alignItems: 'flex-end' }}>
               <div style={{ position: 'absolute', inset: 0, backgroundImage: `url("${heroImg}")`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg,rgba(10,14,20,0.12) 0%,rgba(10,14,20,0) 28%,rgba(10,14,20,0.74) 100%)' }} />
-              <div style={{ position: 'relative', maxWidth: 1200, margin: '0 auto', width: '100%', padding: '0 40px 70px', ...reveal('entry 6% cover 42%') }}>
+              <div className="lh-feat" style={{ position: 'relative', maxWidth: 1200, margin: '0 auto', width: '100%', padding: '0 40px 70px', ...reveal('entry 6% cover 42%') }}>
                 <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#E9C879', marginBottom: 18 }}>Featured work</div>
                 <h2 style={{ fontSize: 'clamp(30px,4.4vw,58px)', lineHeight: 1.02, fontWeight: 600, letterSpacing: '-0.035em', color: '#fff', maxWidth: '20ch' }}>Finished to a standard the market follows.</h2>
                 <div style={{ marginTop: 20, fontFamily: MONO, fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.72)' }}>Private residence · Les Berges du Lac 2, Tunis</div>
@@ -536,8 +549,8 @@ export default function App() {
             </section>
 
             {/* CONTACT */}
-            <section style={{ maxWidth: 1080, margin: '0 auto', padding: '104px 40px 48px' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: 48, alignItems: 'end', ...reveal('entry 0% cover 22%') }}>
+            <section className="lh-sec" style={{ maxWidth: 1080, margin: '0 auto', padding: '104px 40px 48px' }}>
+              <div className="lh-grid-contact" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: 48, alignItems: 'end', ...reveal('entry 0% cover 22%') }}>
                 <div>
                   <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#C5A039', marginBottom: 18 }}>Get in touch</div>
                   <h2 style={{ fontSize: 'clamp(34px,5vw,62px)', lineHeight: 1.0, fontWeight: 600, letterSpacing: '-0.04em', color: '#14181f' }}>Let's build<br />together.</h2>
@@ -559,7 +572,7 @@ export default function App() {
               </div>
             </section>
 
-            <footer style={{ borderTop: '1px solid rgba(20,24,31,0.1)', maxWidth: 1080, margin: '0 auto', padding: '30px 40px 50px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20, flexWrap: 'wrap' }}>
+            <footer className="lh-foot" style={{ borderTop: '1px solid rgba(20,24,31,0.1)', maxWidth: 1080, margin: '0 auto', padding: '30px 40px 50px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20, flexWrap: 'wrap' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 11 }}>
                 <img src={holdingLogo} alt="" style={{ height: 30, width: 'auto', display: 'block' }} />
                 <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(20,24,31,0.5)' }}>© 2026 Leaders Holding</span>
@@ -570,7 +583,7 @@ export default function App() {
           </div>
 
           {activeSector && (
-            <aside style={{ position: 'fixed', top: 96, right: 24, bottom: 24, width: 392, maxWidth: 'calc(100vw - 48px)', zIndex: 30, borderRadius: 24, padding: '30px 28px', display: 'flex', flexDirection: 'column', background: 'rgba(255,255,255,0.66)', backdropFilter: 'blur(30px) saturate(170%)', WebkitBackdropFilter: 'blur(30px) saturate(170%)', border: '1px solid rgba(255,255,255,0.78)', boxShadow: '0 40px 90px -34px rgba(30,45,70,0.5), inset 0 1px 0 rgba(255,255,255,0.8)', animation: 'lh-rise 0.5s cubic-bezier(.22,1,.36,1) both', overflow: 'hidden' }}>
+            <aside className="lh-drawer" style={{ position: 'fixed', top: 96, right: 24, bottom: 24, width: 392, maxWidth: 'calc(100vw - 48px)', zIndex: 30, borderRadius: 24, padding: '30px 28px', display: 'flex', flexDirection: 'column', background: 'rgba(255,255,255,0.66)', backdropFilter: 'blur(30px) saturate(170%)', WebkitBackdropFilter: 'blur(30px) saturate(170%)', border: '1px solid rgba(255,255,255,0.78)', boxShadow: '0 40px 90px -34px rgba(30,45,70,0.5), inset 0 1px 0 rgba(255,255,255,0.8)', animation: 'lh-rise 0.5s cubic-bezier(.22,1,.36,1) both', overflow: 'hidden' }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 16 }}>
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontFamily: MONO, fontSize: 10, letterSpacing: '0.26em', textTransform: 'uppercase', color: 'rgba(20,24,31,0.5)', marginBottom: 11 }}>
@@ -603,7 +616,7 @@ export default function App() {
       {/* NEXUS INDEX MENU */}
       {menuOpen && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 130, background: 'rgba(238,241,246,0.74)', backdropFilter: 'blur(28px) saturate(150%)', WebkitBackdropFilter: 'blur(28px) saturate(150%)', animation: 'lh-fade 0.4s ease both', overflowY: 'auto' }}>
-          <div style={{ maxWidth: 1220, margin: '0 auto', padding: '108px 40px 80px' }}>
+          <div className="lh-menu-wrap" style={{ maxWidth: 1220, margin: '0 auto', padding: '108px 40px 80px' }}>
             <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap', borderBottom: '1px solid rgba(20,24,31,0.1)', paddingBottom: 26, marginBottom: 40 }}>
               <div>
                 <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#C5A039', marginBottom: 12 }}>Global Index</div>
@@ -638,12 +651,12 @@ export default function App() {
       {/* WORLD */}
       {world && (
         <div id="world-scroll" onWheel={worldWheel} style={{ position: 'fixed', inset: 0, zIndex: 100, overflowY: 'auto', background: world.bg, animation: 'lh-worldin 0.55s cubic-bezier(.22,1,.36,1) both', '--accent': world.P, '--accentSoft': world.softA, '--accentGlow': world.glowA }}>
-          <div style={{ position: 'sticky', top: 0, zIndex: 5, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '78px 40px 18px', background: `linear-gradient(180deg,${world.navFade} 35%,rgba(255,255,255,0))`, backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)' }}>
+          <div className="lh-world-nav" style={{ position: 'sticky', top: 0, zIndex: 5, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '78px 40px 18px', background: `linear-gradient(180deg,${world.navFade} 35%,rgba(255,255,255,0))`, backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)' }}>
             <button className="lh-back" onClick={backToHub} style={{ display: 'flex', alignItems: 'center', gap: 10, border: `1px solid ${world.softA}`, background: 'rgba(255,255,255,0.7)', cursor: 'pointer', fontFamily: MONO, fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: world.P, padding: '12px 20px', borderRadius: 100, boxShadow: '0 8px 22px -12px rgba(30,45,70,0.3)' }}>← Return to Nexus</button>
             <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'rgba(20,24,31,0.5)' }}>{world.sector}</span>
           </div>
 
-          <div style={{ maxWidth: 1180, margin: '0 auto', padding: '24px 40px 90px', position: 'relative' }}>
+          <div className="lh-world-wrap" style={{ maxWidth: 1180, margin: '0 auto', padding: '24px 40px 90px', position: 'relative' }}>
             {/* Hero */}
             <section style={{ padding: '30px 0 56px', borderBottom: `1px solid ${world.softA}`, position: 'relative', overflow: 'hidden' }}>
               {world.hasLogo && <div style={{ position: 'absolute', top: -20, right: -50, width: 340, height: 340, backgroundImage: `url("${world.logoUrl}")`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', opacity: 0.06, pointerEvents: 'none' }} />}
@@ -666,7 +679,7 @@ export default function App() {
             {/* Bento services */}
             <section style={{ padding: '56px 0' }}>
               <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(20,24,31,0.45)', marginBottom: 26 }}>What we do</div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12,1fr)', gap: 18, gridAutoFlow: 'row dense' }}>
+              <div className="lh-bento" style={{ display: 'grid', gridTemplateColumns: 'repeat(12,1fr)', gap: 18, gridAutoFlow: 'row dense' }}>
                 {world.services.map((sv) => (
                   <div key={sv.no} className="lh-tile" style={{ gridColumn: sv.gc, gridRow: sv.gr, position: 'relative', overflow: 'hidden', borderRadius: 22, padding: '28px 28px 32px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: sv.minh, background: 'rgba(255,255,255,0.78)', backdropFilter: 'blur(16px) saturate(150%)', WebkitBackdropFilter: 'blur(16px) saturate(150%)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 22px 54px -28px rgba(30,45,70,0.35)' }}>
                     <div style={{ position: 'absolute', top: -40, right: -40, width: 150, height: 150, borderRadius: '50%', background: `radial-gradient(circle,${world.softA},transparent 70%)`, pointerEvents: 'none' }} />
@@ -681,7 +694,7 @@ export default function App() {
             </section>
 
             {/* Stats + chart */}
-            <section style={{ padding: '8px 0 56px', borderTop: `1px solid ${world.softA}`, display: 'grid', gridTemplateColumns: '1fr 1.4fr', gap: 40, alignItems: 'start' }}>
+            <section className="lh-statschart" style={{ padding: '8px 0 56px', borderTop: `1px solid ${world.softA}`, display: 'grid', gridTemplateColumns: '1fr 1.4fr', gap: 40, alignItems: 'start' }}>
               <div style={{ paddingTop: 34 }}>
                 <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(20,24,31,0.45)', marginBottom: 26 }}>By the numbers</div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '26px 30px' }}>
@@ -712,7 +725,7 @@ export default function App() {
             {/* Projects */}
             <section style={{ padding: '48px 0', borderTop: `1px solid ${world.softA}` }}>
               <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(20,24,31,0.45)', marginBottom: 26 }}>Selected work</div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 18 }}>
+              <div className="lh-proj" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 18 }}>
                 {world.projects.map((pj) => (
                   <div key={pj.name} style={{ position: 'relative', borderRadius: 18, overflow: 'hidden', aspectRatio: '4 / 5', backgroundImage: `repeating-linear-gradient(135deg,${world.softA} 0 2px,transparent 2px 12px)`, backgroundColor: 'rgba(255,255,255,0.5)', border: '1px solid rgba(255,255,255,0.7)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.8)', display: 'flex', alignItems: 'flex-end', padding: 22 }}>
                     <div>
