@@ -31,9 +31,7 @@ jobs:
           tags: |
             bangov2/leaders-holding:latest
           build-args: |
-            VITE_APP_API_URL=https://serveur.leaders-business.com/api
-            VITE_APP_API_KEY=${{ secrets.VITE_APP_API_KEY }}
-            VITE_APP_IMAGES=https://serveur.leaders-business.com/uploads/
+            NEXT_PUBLIC_SITE_URL=https://leadersholding.tn
         
       - name: Deploy to server
         uses: appleboy/ssh-action@master

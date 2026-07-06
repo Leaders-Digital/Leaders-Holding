@@ -1,8 +1,6 @@
 # Stage 1: Dependencies
 FROM node:18-alpine AS deps
 WORKDIR /app
-
-# Copy package files
 COPY package.json package-lock.json* ./
 RUN if [ -f package-lock.json ]; then npm ci; else npm install; fi
 
@@ -12,24 +10,26 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Build the Vite app
+ARG NEXT_PUBLIC_SITE_URL=https://leadersholding.tn
+ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
+
 RUN npm run build
 
 # Stage 3: Runner
-FROM nginx:1.27-alpine AS runner
+FROM node:18-alpine AS runner
+WORKDIR /app
 
-COPY --from=builder /app/dist /usr/share/nginx/html
-RUN printf '%s\n' 'server {' \
-	'    listen 80;' \
-	'    server_name _;' \
-	'    root /usr/share/nginx/html;' \
-	'    index index.html;' \
-	'    location / {' \
-	'        try_files $uri $uri/ /index.html;' \
-	'    }' \
-	'}' > /etc/nginx/conf.d/default.conf
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
 
-EXPOSE 80
+RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 nextjs
 
-CMD ["nginx", "-g", "daemon off;"]
+COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+USER nextjs
+EXPOSE 3000
+
+CMD ["node", "server.js"]

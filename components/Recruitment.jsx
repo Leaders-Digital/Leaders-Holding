@@ -1,5 +1,8 @@
+'use client';
+
 import { useEffect, useRef, useState } from 'react';
-import holdingLogo from './assets/leaders-logo.webp';
+import Link from 'next/link';
+import { holdingLogo } from '@/lib/logos';
 
 const API = 'https://serveur.leaders-business.com';
 const MONO = "'IBM Plex Mono', monospace";
@@ -111,6 +114,7 @@ export default function Recruitment() {
   }
 
   const selected = selectedId ? jobs.find((j) => j._id === selectedId) : null;
+
   const optionsFor = (q) => q.type === 'yes_no' ? [{ value: 'Oui', label: 'Oui' }, { value: 'Non', label: 'Non' }]
     : q.type === 'rating' ? [1, 2, 3, 4, 5].map((n) => ({ value: String(n), label: `${n} / 5` }))
     : q.type === 'single_choice' ? (q.options || []).map((o) => ({ value: o.label, label: o.label })) : null;
@@ -118,14 +122,14 @@ export default function Recruitment() {
   return (
     <div style={{ minHeight: '100vh', background: 'radial-gradient(120% 90% at 50% 0%,#fbfcfe 0%,#f1f4f9 55%,#e8edf4 100%)', fontFamily: "'Inter Tight', sans-serif", color: '#14181f' }}>
       <header className="rc-head" style={{ position: 'sticky', top: 0, zIndex: 20, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 40px', background: 'rgba(244,246,250,0.82)', backdropFilter: 'blur(18px) saturate(160%)', WebkitBackdropFilter: 'blur(18px) saturate(160%)', borderBottom: '1px solid rgba(20,24,31,0.07)' }}>
-        <a href="#home" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
+        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
           <img src={holdingLogo} alt="Leaders Holding" style={{ height: 38, width: 'auto', display: 'block' }} />
           <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
             <span style={{ fontSize: 13, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#14181f', lineHeight: 1 }}>Leaders Holding</span>
             <span className="rc-head-sub" style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(20,24,31,0.45)', lineHeight: 1 }}>Carrières · Recrutement</span>
           </div>
-        </a>
-        <a href="#home" style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#14181f', textDecoration: 'none', padding: '11px 18px', borderRadius: 100, border: '1px solid rgba(20,24,31,0.14)', background: 'rgba(255,255,255,0.7)' }}>← Retour au site</a>
+        </Link>
+        <Link href="/" style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#14181f', textDecoration: 'none', padding: '11px 18px', borderRadius: 100, border: '1px solid rgba(20,24,31,0.14)', background: 'rgba(255,255,255,0.7)' }}>← Retour au site</Link>
       </header>
 
       {loading && (
