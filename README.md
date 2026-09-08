@@ -48,9 +48,30 @@ public/
 
 ## Config
 
+Copy `.env.example` to `.env.local` (dev) or `.env` (production Docker):
+
 ```bash
 NEXT_PUBLIC_SITE_URL=https://leadersholding.tn
+NEXT_PUBLIC_LEADERS_API_URL=https://serveur.leaders-business.com/api
+NEXT_PUBLIC_LEADERS_UPLOADS_URL=https://serveur.leaders-business.com
+
+# Server-only — read-only CRM account (never commit real values)
+LEADERS_API_URL=https://serveur.leaders-business.com/api
+LEADERS_API_TELEPHONE=+216XXXXXXXX
+LEADERS_API_PASSWORD=<password>
 ```
+
+## Offres d'emploi (API)
+
+Le listing passe par un **proxy serveur** (`/api/job-offers`) qui s'authentifie avec un JWT — les identifiants CRM ne sont jamais exposés au navigateur.
+
+| Action | Route | Auth |
+|--------|-------|------|
+| Lister les offres | `GET /api/job-offers` | JWT côté serveur |
+| Détail d'une offre | `GET /api/job-offers/:id` | JWT côté serveur |
+| Postuler | `POST …/job-offers/:id/apply` | Public (direct depuis le navigateur) |
+
+Sans `LEADERS_API_TELEPHONE` / `LEADERS_API_PASSWORD`, la page carrières affiche des données d'exemple.
 
 ## Où modifier
 
@@ -61,9 +82,9 @@ NEXT_PUBLIC_SITE_URL=https://leadersholding.tn
 
 ## Déploiement
 
-Docker (standalone Next.js) :
+Docker (standalone Next.js). Create `/home/ubuntu/leaders-holding/.env` on the server with the variables above, then:
 
 ```bash
 docker build -t leaders-holding .
-docker run -p 3000:3000 leaders-holding
+docker run -p 3000:3000 --env-file .env leaders-holding
 ```

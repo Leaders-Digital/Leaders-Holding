@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { holdingLogo } from '@/lib/logos';
 
-const API = 'https://serveur.leaders-business.com';
+const UPLOADS = process.env.NEXT_PUBLIC_LEADERS_UPLOADS_URL || 'https://serveur.leaders-business.com';
+const APPLY_API = (process.env.NEXT_PUBLIC_LEADERS_API_URL || 'https://serveur.leaders-business.com/api').replace(/\/$/, '');
 const MONO = "'IBM Plex Mono', monospace";
 
 const initials = (n) => {
@@ -17,7 +18,7 @@ const fmtDate = (iso) => {
   if (isNaN(d.getTime())) return '';
   return `${('0' + d.getDate()).slice(-2)}/${('0' + (d.getMonth() + 1)).slice(-2)}/${d.getFullYear()}`;
 };
-const logoUrl = (j) => (j.societe && j.societe.logo ? API + j.societe.logo : '');
+const logoUrl = (j) => (j.societe && j.societe.logo ? UPLOADS + j.societe.logo : '');
 
 const translateJobType = (value) => {
   const map = {
@@ -80,12 +81,16 @@ export default function Recruitment() {
   async function load() {
     setLoading(true);
     try {
-      const r = await fetch(`${API}/api/job-offers?status=published&includeExpired=false&page=1&limit=20`, { headers: { Accept: 'application/json' } });
+      const r = await fetch('/api/job-offers?page=1&limit=20', { headers: { Accept: 'application/json' } });
       if (!r.ok) throw new Error('http');
       const j = await r.json();
-      setJobs((j && j.data) || []); setOffline(false); setLoading(false);
-    } catch (e) {
-      setJobs(sample()); setOffline(true); setLoading(false);
+      setJobs((j && j.data) || []);
+      setOffline(false);
+      setLoading(false);
+    } catch {
+      setJobs(sample());
+      setOffline(true);
+      setLoading(false);
     }
   }
 
@@ -104,7 +109,7 @@ export default function Recruitment() {
       fd.append('nom', form.nom); fd.append('prenom', form.prenom); fd.append('email', form.email); fd.append('telephone', form.telephone);
       fd.append('cv', cvFile.current);
       fd.append('answers', JSON.stringify((job.questions || []).map((q) => ({ questionId: q._id, questionLabel: q.label, questionType: q.type, value: answers[q._id] }))));
-      const r = await fetch(`${API}/api/job-offers/${job._id}/apply`, { method: 'POST', body: fd });
+      const r = await fetch(`${APPLY_API}/job-offers/${job._id}/apply`, { method: 'POST', body: fd });
       if (!r.ok) throw new Error('HTTP ' + r.status);
       await r.json().catch(() => ({}));
       setSubmitting(false); setSubmitted(true);
@@ -145,7 +150,7 @@ export default function Recruitment() {
             <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#C5A039', marginBottom: 18 }}>Postes ouverts · {jobs.length}</div>
             <h1 style={{ fontSize: 'clamp(38px,6vw,76px)', lineHeight: 0.98, fontWeight: 600, letterSpacing: '-0.04em', color: '#14181f', maxWidth: '16ch' }}>Construisez votre carrière chez <span style={{ background: 'linear-gradient(115deg,#E9C879,#C5A039)', WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Leaders</span>.</h1>
             <p style={{ marginTop: 22, fontSize: 'clamp(16px,1.6vw,20px)', lineHeight: 1.55, color: 'rgba(20,24,31,0.6)', maxWidth: '56ch' }}>Rejoignez l'une de nos sociétés à travers le groupe — immobilier, construction, technologie, commerce et plus encore. Découvrez nos offres et postulez en quelques minutes.</p>
-            {offline && <div style={{ marginTop: 26, display: 'inline-flex', alignItems: 'center', gap: 10, padding: '10px 16px', borderRadius: 100, background: 'rgba(197,160,57,0.12)', border: '1px solid rgba(197,160,57,0.3)', fontFamily: MONO, fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#9c7d2c' }}>Aperçu hors-ligne · données d'exemple</div>}
+            {offline && <div style={{ marginTop: 26, display: 'inline-flex', alignItems: 'center', gap: 10, padding: '10px 16px', borderRadius: 100, background: 'rgba(197,160,57,0.12)', border: '1px solid rgba(197,160,57,0.3)', fontFamily: MONO, fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#9c7d2c' }}>Aperçu hors-ligne · données d'exemple (API indisponible ou non configurée)</div>}
           </section>
           <section className="rc-list" style={{ maxWidth: 1120, margin: '0 auto', padding: '24px 40px 110px' }}>
             {jobs.length === 0 && (
