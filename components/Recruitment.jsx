@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { holdingLogo } from '@/lib/logos';
 
 const UPLOADS = process.env.NEXT_PUBLIC_LEADERS_UPLOADS_URL || 'https://serveur.leaders-business.com';
@@ -63,11 +64,13 @@ function sample() {
 const field = { width: '100%', padding: '13px 15px', borderRadius: 12, border: '1px solid rgba(20,24,31,0.14)', background: '#fff', fontSize: 14.5, color: '#14181f', fontFamily: "'Inter Tight', sans-serif" };
 const lbl = { display: 'block', fontSize: 12, fontWeight: 600, letterSpacing: '0.02em', color: 'rgba(20,24,31,0.6)', marginBottom: 7 };
 
-export default function Recruitment() {
+export default function Recruitment({ jobId = null }) {
+  const router = useRouter();
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [detailLoading, setDetailLoading] = useState(false);
   const [offline, setOffline] = useState(false);
-  const [selectedId, setSelectedId] = useState(null);
+  const [detailJob, setDetailJob] = useState(null);
   const [form, setForm] = useState({ nom: '', prenom: '', email: '', telephone: '' });
   const [answers, setAnswers] = useState({});
   const [cvName, setCvName] = useState('');
@@ -77,6 +80,44 @@ export default function Recruitment() {
   const cvFile = useRef(null);
 
   useEffect(() => { load(); }, []);
+
+  useEffect(() => {
+    if (!jobId) {
+      setDetailJob(null);
+      return;
+    }
+    setSubmitted(false);
+    setSubmitError(null);
+    setForm({ nom: '', prenom: '', email: '', telephone: '' });
+    setAnswers({});
+    setCvName('');
+    cvFile.current = null;
+    window.scrollTo(0, 0);
+
+    const fromList = jobs.find((j) => j._id === jobId);
+    if (fromList) {
+      setDetailJob(fromList);
+      return;
+    }
+    if (loading) return;
+
+    let cancelled = false;
+    (async () => {
+      setDetailLoading(true);
+      try {
+        const r = await fetch(`/api/job-offers/${jobId}`, { headers: { Accept: 'application/json' } });
+        if (!r.ok) throw new Error('http');
+        const j = await r.json();
+        if (!cancelled) setDetailJob(j.data || null);
+      } catch {
+        const sampleJob = sample().find((j) => j._id === jobId);
+        if (!cancelled) setDetailJob(sampleJob || null);
+      } finally {
+        if (!cancelled) setDetailLoading(false);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [jobId, jobs, loading]);
 
   async function load() {
     setLoading(true);
@@ -94,12 +135,14 @@ export default function Recruitment() {
     }
   }
 
-  const open = (id) => { setSelectedId(id); setSubmitted(false); setSubmitError(null); setForm({ nom: '', prenom: '', email: '', telephone: '' }); setAnswers({}); setCvName(''); cvFile.current = null; window.scrollTo(0, 0); };
-  const back = () => { setSelectedId(null); window.scrollTo(0, 0); };
+  const back = () => {
+    router.push('/recrutement');
+  };
   const onCv = (e) => { const f = e.target.files && e.target.files[0]; cvFile.current = f || null; setCvName(f ? f.name : ''); };
 
   async function submit() {
-    const job = jobs.find((j) => j._id === selectedId); if (!job) return;
+    const job = selected;
+    if (!job) return;
     if (!form.prenom || !form.nom || !form.email || !form.telephone) { setSubmitError('Veuillez remplir vos nom, prénom, e-mail et téléphone.'); return; }
     if (!cvFile.current) { setSubmitError('Veuillez joindre votre CV au format PDF.'); return; }
     for (const q of job.questions || []) { if (q.required) { const v = answers[q._id]; if (v == null || v === '') { setSubmitError('Veuillez répondre à toutes les questions obligatoires.'); return; } } }
@@ -118,7 +161,9 @@ export default function Recruitment() {
     }
   }
 
-  const selected = selectedId ? jobs.find((j) => j._id === selectedId) : null;
+  const selected = jobId
+    ? (jobs.find((j) => j._id === jobId) || detailJob)
+    : null;
 
   const optionsFor = (q) => q.type === 'yes_no' ? [{ value: 'Oui', label: 'Oui' }, { value: 'Non', label: 'Non' }]
     : q.type === 'rating' ? [1, 2, 3, 4, 5].map((n) => ({ value: String(n), label: `${n} / 5` }))
@@ -137,14 +182,21 @@ export default function Recruitment() {
         <Link href="/" style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#14181f', textDecoration: 'none', padding: '11px 18px', borderRadius: 100, border: '1px solid rgba(20,24,31,0.14)', background: 'rgba(255,255,255,0.7)' }}>← Retour au site</Link>
       </header>
 
-      {loading && (
+      {loading && !jobId && (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 20, padding: '160px 40px' }}>
           <div style={{ width: 38, height: 38, borderRadius: '50%', border: '3px solid rgba(197,160,57,0.25)', borderTopColor: '#C5A039', animation: 'rc-spin 0.9s linear infinite' }} />
           <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'rgba(20,24,31,0.5)' }}>Chargement des offres…</div>
         </div>
       )}
 
-      {!loading && !selected && (
+      {(detailLoading && jobId) && (
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 20, padding: '160px 40px' }}>
+          <div style={{ width: 38, height: 38, borderRadius: '50%', border: '3px solid rgba(197,160,57,0.25)', borderTopColor: '#C5A039', animation: 'rc-spin 0.9s linear infinite' }} />
+          <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'rgba(20,24,31,0.5)' }}>Chargement de l'offre…</div>
+        </div>
+      )}
+
+      {!loading && !jobId && (
         <>
           <section className="rc-hero" style={{ maxWidth: 1120, margin: '0 auto', padding: '78px 40px 26px' }}>
             <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#C5A039', marginBottom: 18 }}>Postes ouverts · {jobs.length}</div>
@@ -163,7 +215,7 @@ export default function Recruitment() {
                 const soc = j.societe || {}, loc = j.location || {};
                 const desc = (j.description || '').replace(/\s+/g, ' ').trim();
                 return (
-                  <div key={j._id} className="rc-card" onClick={() => open(j._id)} style={{ cursor: 'pointer', borderRadius: 22, padding: '26px 26px 24px', background: 'rgba(255,255,255,0.78)', backdropFilter: 'blur(14px) saturate(150%)', WebkitBackdropFilter: 'blur(14px) saturate(150%)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 18px 44px -28px rgba(30,45,70,0.4)', display: 'flex', flexDirection: 'column', gap: 16 }}>
+                  <Link key={j._id} href={`/recrutement/${j._id}`} className="rc-card" style={{ cursor: 'pointer', borderRadius: 22, padding: '26px 26px 24px', background: 'rgba(255,255,255,0.78)', backdropFilter: 'blur(14px) saturate(150%)', WebkitBackdropFilter: 'blur(14px) saturate(150%)', border: '1px solid rgba(255,255,255,0.85)', boxShadow: '0 18px 44px -28px rgba(30,45,70,0.4)', display: 'flex', flexDirection: 'column', gap: 16, textDecoration: 'none', color: 'inherit' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 13 }}>
                       <div style={{ flex: 'none', width: 50, height: 50, borderRadius: 12, background: '#fff', boxShadow: 'inset 0 0 0 1px rgba(20,24,31,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
                         {soc.logo ? <div style={{ width: '100%', height: '100%', backgroundImage: `url("${logoUrl(j)}")`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundOrigin: 'content-box', backgroundClip: 'content-box', padding: 7 }} /> : <span style={{ fontFamily: MONO, fontSize: 14, fontWeight: 500, color: '#C5A039' }}>{initials(soc.nom || j.title)}</span>}
@@ -180,7 +232,7 @@ export default function Recruitment() {
                       <span style={{ fontFamily: MONO, fontSize: 9.5, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(20,24,31,0.5)', background: 'rgba(20,24,31,0.05)', padding: '5px 10px', borderRadius: 7 }}>{translateExperience(j.experience)}</span>
                     </div>
                     <div style={{ marginTop: 6, display: 'flex', alignItems: 'center', gap: 8, fontFamily: MONO, fontSize: 10.5, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#C5A039' }}>Voir &amp; postuler →</div>
-                  </div>
+                  </Link>
                 );
               })}
             </div>
@@ -188,7 +240,14 @@ export default function Recruitment() {
         </>
       )}
 
-      {selected && (
+      {jobId && !detailLoading && !selected && (
+        <section style={{ maxWidth: 880, margin: '0 auto', padding: '120px 40px', textAlign: 'center' }}>
+          <div style={{ fontSize: 22, fontWeight: 600, color: '#14181f' }}>Cette offre n'est plus disponible.</div>
+          <Link href="/recrutement" style={{ display: 'inline-block', marginTop: 24, fontFamily: MONO, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#C5A039', textDecoration: 'none' }}>← Toutes les offres</Link>
+        </section>
+      )}
+
+      {jobId && selected && !detailLoading && (
         <section className="rc-detail" style={{ maxWidth: 880, margin: '0 auto', padding: '46px 40px 110px' }}>
           <div onClick={back} style={{ display: 'inline-flex', alignItems: 'center', gap: 9, cursor: 'pointer', fontFamily: MONO, fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(20,24,31,0.55)', marginBottom: 30 }}>← Toutes les offres</div>
           {(() => {
