@@ -11,7 +11,6 @@ export async function GET(request) {
     return NextResponse.json({ success: true, ...result });
   } catch (err) {
     const message = err.message || 'Failed to load job offers';
-    const status = message.includes('must be set') ? 503 : 502;
-    return NextResponse.json({ success: false, message }, { status });
+    return NextResponse.json({ success: false, message }, { status: err.status || 502 });
   }
 }
